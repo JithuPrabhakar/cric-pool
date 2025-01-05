@@ -26,6 +26,11 @@ const Home = () => {
           </NavLink>
         </div>
       </div>
+
+      {/* Footer Section */}
+      <div className='bg-gray-800 text-white text-center py-4 rounded-b-md'>
+        &copy; 2025
+      </div>
     </div>
   )
 }
