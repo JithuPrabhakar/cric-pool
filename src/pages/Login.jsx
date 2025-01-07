@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 const Login = () => {
   return (
     <div className='w-96 mx-auto mt-10'>
-      {/* Header Section */}
       <div className='bg-blue-500 text-white flex gap-8 items-center px-6 py-2 rounded-t-md'>
         <button className='border border-1 px-2 py-1 rounded-md text-sm'>
           <NavLink to={'/'}>Go Back</NavLink>
@@ -11,7 +10,6 @@ const Login = () => {
         <h2 className='font-semibold text-lg'>LOGIN TO YOUR ACCOUNT</h2>
       </div>
 
-      {/* Form Section */}
       <div className='p-6 bg-white rounded-md shadow-lg w-[22rem] mx-auto'>
         <div className='mb-6'>
           <label
@@ -51,6 +49,15 @@ const Login = () => {
           Dont have an account?{' '}
           <NavLink to={'/signup'} className='text-blue-500 cursor-pointer'>
             Sign Up
+          </NavLink>
+        </p>
+
+        <p className='text-center text-gray-500 text-sm mt-4'>
+          <NavLink
+            to='/forgot-password'
+            className='text-blue-500 cursor-pointer'
+          >
+            Forgot Password
           </NavLink>
         </p>
 

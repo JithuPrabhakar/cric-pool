@@ -4,7 +4,7 @@ const Register = () => {
   return (
     <div className='w-96 mx-auto mt-10'>
       {/* Header Section */}
-      <div className='bg-green-500 text-white flex gap-8 items-center px-6 py-2 rounded-t-md'>
+      <div className='bg-primary-500 text-white flex gap-8 items-center px-6 py-2 rounded-t-md'>
         <button className='border border-1 px-2 py-1 rounded-md text-sm'>
           <NavLink to={'/'}>Go Back</NavLink>
         </button>
@@ -24,7 +24,7 @@ const Register = () => {
             id='email'
             type='email'
             placeholder='Enter your email'
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'
+            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500'
           />
         </div>
 
@@ -39,7 +39,7 @@ const Register = () => {
             id='phone'
             type='tel'
             placeholder='Enter your phone number'
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'
+            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500'
           />
         </div>
 
@@ -54,17 +54,17 @@ const Register = () => {
             id='password'
             type='password'
             placeholder='Enter your password'
-            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'
+            className='w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500'
           />
         </div>
 
-        <button className='w-full bg-green-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'>
+        <button className='w-full bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-primary-600'>
           Sign Up
         </button>
 
         <p className='text-center text-gray-500 text-sm mt-4'>
           Already have an account?{' '}
-          <NavLink to={'/login'} className='text-green-500 cursor-pointer'>
+          <NavLink to={'/login'} className='text-primary-500 cursor-pointer'>
             Login
           </NavLink>
         </p>

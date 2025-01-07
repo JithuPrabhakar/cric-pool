@@ -14,13 +14,13 @@ const Home = () => {
         <div className='flex flex-col gap-4'>
           <NavLink
             to='/signup'
-            className='block text-center bg-green-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'
+            className='block text-center bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'
           >
             Sign Up
           </NavLink>
           <NavLink
             to='/login'
-            className='block text-center bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600'
+            className='block text-center bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600'
           >
             Login
           </NavLink>
