@@ -25,7 +25,7 @@ const Dashboard = () => {
         <div className='bg-white rounded-md shadow p-4'>
           <p className='text-sm font-medium'>Mega Contest</p>
           <p className='text-xs text-gray-500 mb-4'>Prize: ₹10,00,000</p>
-          <button className='w-full bg-green-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'>
+          <button className='w-full bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'>
             Join Now
           </button>
         </div>
