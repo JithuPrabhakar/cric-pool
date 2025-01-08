@@ -1,20 +1,26 @@
+import Button from '../components/Login-Signup/Button'
+import FormWrapper from '../components/Login-Signup/FormWrapper'
+import Header from '../components/Login-Signup/Header'
+import InputField from '../components/Login-Signup/InputField'
+
 const ForgotPassword = () => {
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-      <div className='w-96 bg-white p-6 rounded-md shadow-md'>
-        <h2 className='text-xl font-bold text-center mb-4'>Forgot Password</h2>
+    <div className='w-full h-screen flex flex-col items-center'>
+      <Header title={'Forgot Password'} />
+      <FormWrapper>
         <p className='text-sm text-gray-600 text-center mb-6'>
           Enter your email or phone number to reset your password.
         </p>
-        <input
-          type='text'
-          placeholder='Email or Phone'
-          className='w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-primary-500'
+        <InputField
+          id={'emailOrPhone'}
+          label={'Email or Phone'}
+          type={'text'}
+          placeholder={'Enter your email or phone'}
         />
-        <button className='w-full bg-primary-500 text-white py-2 rounded-md hover:bg-primary-600'>
+        <Button className='w-full bg-primary-800 text-white hover:bg-primary-500'>
           Send Reset Link
-        </button>
-      </div>
+        </Button>
+      </FormWrapper>
     </div>
   )
 }

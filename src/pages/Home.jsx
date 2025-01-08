@@ -1,35 +1,32 @@
 import { NavLink } from 'react-router-dom'
+// import banner from '../assets/banner.jpg'
 
 const Home = () => {
   return (
-    <div className='w-96 mx-auto mt-10'>
-      {/* Header Section */}
-      <div className='bg-gray-800 text-white text-center py-4 rounded-t-md'>
-        <h1 className='text-2xl font-semibold'>Welcome to Our App</h1>
-        <p className='mt-2 text-sm'>Sign up or log in to get started!</p>
+    <div
+      // style={{ backgroundImage: `url(${banner})` }}
+      className='text-white flex flex-col items-stretch px-8 justify-around h-screen'
+    >
+      <div className='text-center'>
+        <h1 className='text-4xl font-bold mb-4'>
+          Welcome to Fantasy Sports App
+        </h1>
+        <p className='text-lg'>Play, Predict, and Win!</p>
       </div>
 
-      {/* Navigation Section */}
-      <div className='p-6 bg-white rounded-md shadow-lg w-[22rem] mx-auto'>
-        <div className='flex flex-col gap-4'>
-          <NavLink
-            to='/signup'
-            className='block text-center bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-green-600'
-          >
-            Sign Up
-          </NavLink>
-          <NavLink
-            to='/login'
-            className='block text-center bg-primary-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600'
-          >
-            Login
-          </NavLink>
-        </div>
-      </div>
-
-      {/* Footer Section */}
-      <div className='bg-gray-800 text-white text-center py-4 rounded-b-md'>
-        &copy; 2025
+      <div className='flex gap-4'>
+        <NavLink
+          to='/signup'
+          className='bg-white w-full text-center text-russian-violet-2 font-semibold px-6 py-2 rounded-lg shadow-lg hover:bg-blue hover:text-white'
+        >
+          Sign Up
+        </NavLink>
+        <NavLink
+          to='/login'
+          className='bg-white w-full text-center text-russian-violet-2 font-semibold px-6 py-2 rounded-lg shadow-lg hover:bg-blue hover:text-white'
+        >
+          Login
+        </NavLink>
       </div>
     </div>
   )
