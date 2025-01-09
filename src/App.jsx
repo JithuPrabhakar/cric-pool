@@ -18,6 +18,7 @@ import background from './assets/background.jpg'
 import EnterOtp from './pages/EnterOtp'
 import EnterName from './pages/EnterName'
 import GetStarted from './pages/GetStarted'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
           <Route path='/create-team' element={<CreateTeam />} />
           <Route path='/signup' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/humans' element={<Devs />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/enter-otp' element={<EnterOtp />} />
           <Route path='/enter-name' element={<EnterName />} />
@@ -48,6 +49,7 @@ function App() {
             element={<WinningCashDetails />}
           />
           <Route path='/stats' element={<Stats />} />
+          <Route path='/humans' element={<Devs />} />
         </Routes>
       </div>
     </Router>
