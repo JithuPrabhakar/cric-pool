@@ -13,8 +13,11 @@ import Scorecard from './pages/Scorecard'
 import SelectSquad from './pages/SelectSquad'
 import WinningCashDetails from './pages/WinningCashDetails'
 import Stats from './pages/Stats'
-import Navbar from './components/Navbar/Navbar'
+// import Navbar from './components/Navbar/Navbar'
 import background from './assets/background.jpg'
+import EnterOtp from './pages/EnterOtp'
+import EnterName from './pages/EnterName'
+import GetStarted from './pages/GetStarted'
 
 function App() {
   return (
@@ -26,6 +29,7 @@ function App() {
         {/* <Navbar />*/}
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/get-started' element={<GetStarted />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/create-team' element={<CreateTeam />} />
@@ -33,6 +37,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/humans' element={<Devs />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/enter-otp' element={<EnterOtp />} />
+          <Route path='/enter-name' element={<EnterName />} />
           <Route path='/edit-profile' element={<EditProfile />} />
           <Route path='/commentary' element={<Commentary />} />
           <Route path='/scorecard' element={<Scorecard />} />
