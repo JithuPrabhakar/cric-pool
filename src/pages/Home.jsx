@@ -1,33 +1,31 @@
 import { NavLink } from 'react-router-dom'
-// import banner from '../assets/banner.jpg'
+import { IoPersonCircle } from 'react-icons/io5'
+import { IoNotificationsSharp } from 'react-icons/io5'
+import { FaWallet } from 'react-icons/fa'
+import MatchesList from '../components/Matches/MatchesList'
 
 const Home = () => {
   return (
-    <div
-      // style={{ backgroundImage: `url(${banner})` }}
-      className='text-white flex flex-col items-stretch px-8 justify-around h-screen'
-    >
-      <div className='text-center'>
-        <h1 className='text-4xl font-bold mb-4'>
-          Welcome to Fantasy Sports App
-        </h1>
-        <p className='text-lg'>Play, Predict, and Win!</p>
-      </div>
-
-      <div className='flex gap-4'>
-        <NavLink
-          to='/signup'
-          className='bg-white w-full text-center text-russian-violet-2 font-semibold px-6 py-2 rounded-lg shadow-lg hover:bg-blue hover:text-white'
-        >
-          Sign Up
-        </NavLink>
-        <NavLink
-          to='/login'
-          className='bg-white w-full text-center text-russian-violet-2 font-semibold px-6 py-2 rounded-lg shadow-lg hover:bg-blue hover:text-white'
-        >
-          Login
-        </NavLink>
-      </div>
+    <div>
+      <header className='flex justify-between items-center py-4 px-12 text-white'>
+        <div className='flex gap-8 items-center'>
+          <NavLink to='/profile'>
+            <IoPersonCircle className='text-5xl' />
+          </NavLink>
+          <p className='text-2xl font-bold'>Logo</p>
+        </div>
+        <div className='flex gap-6'>
+          <NavLink to='/notification'>
+            <IoNotificationsSharp className='text-xl' />
+          </NavLink>
+          <NavLink to='/wallet'>
+            <FaWallet className='text-xl' />
+          </NavLink>
+        </div>
+      </header>
+      <section className='w-full bg-white text-black px-8 rounded-lg'>
+        <MatchesList />
+      </section>
     </div>
   )
 }
