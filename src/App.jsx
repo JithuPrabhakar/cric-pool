@@ -19,6 +19,8 @@ import EnterOtp from './pages/EnterOtp'
 import EnterName from './pages/EnterName'
 import GetStarted from './pages/GetStarted'
 import Profile from './pages/Profile'
+import MyMatches from './pages/MyMatches'
+import NotificationsPage from './pages/NotificationsPage'
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
           <Route path='/signup' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/my-matches' element={<MyMatches />} />
+          <Route path='/notifications' element={<NotificationsPage />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/enter-otp' element={<EnterOtp />} />
           <Route path='/enter-name' element={<EnterName />} />
