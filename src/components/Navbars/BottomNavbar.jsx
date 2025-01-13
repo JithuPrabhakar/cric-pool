@@ -5,11 +5,10 @@ const BottomNavbar = () => {
     { label: 'Home', path: '/', icon: '🏠' },
     { label: 'My Matches', path: '/matches', icon: '🎯' },
     { label: 'Rewards', path: '/rewards', icon: '🎁' },
-    { label: 'Gurus', path: '/gurus', icon: '📚' },
   ]
 
   return (
-    <div className='fixed bottom-0 left-0 w-full bg-primary-100 shadow-md z-10'>
+    <div className='fixed bottom-0 left-0 right-0 bg-white shadow-primary-100 shadow-3xl z-10'>
       <div className='flex justify-around'>
         {navItems.map((item, index) => (
           <NavLink

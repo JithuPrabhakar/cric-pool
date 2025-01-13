@@ -85,7 +85,7 @@ const NotificationsPage = () => {
       <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Notifications List */}
-      <div>
+      <div className='bg-white h-screen'>
         {notifications[activeTab].map((notification, index) => (
           <NotificationItem
             key={index}
