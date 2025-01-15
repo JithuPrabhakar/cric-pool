@@ -21,6 +21,8 @@ import GetStarted from './pages/GetStarted'
 import Profile from './pages/Profile'
 import MyMatches from './pages/MyMatches'
 import NotificationsPage from './pages/NotificationsPage'
+import AddCash from './pages/AddCash'
+import PaymentOptions from './pages/PaymentOptions'
 
 function App() {
   return (
@@ -53,6 +55,8 @@ function App() {
             element={<WinningCashDetails />}
           />
           <Route path='/stats' element={<Stats />} />
+          <Route path='/add-cash' element={<AddCash />} />
+          <Route path='/payment-options' element={<PaymentOptions />} />
           <Route path='/humans' element={<Devs />} />
         </Routes>
       </div>
