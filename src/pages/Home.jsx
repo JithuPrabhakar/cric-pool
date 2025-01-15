@@ -23,7 +23,7 @@ const Home = () => {
           </NavLink>
         </div>
       </header>
-      <section className='w-full bg-white text-black px-8 rounded-lg'>
+      <section className='w-full bg-white text-black rounded-lg'>
         <MatchesList />
       </section>
     </div>
