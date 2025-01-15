@@ -1,24 +1,35 @@
+import logo1 from '../assets/logo1.png'
+import logo2 from '../assets/logo2.png'
+import logo3 from '../assets/logo3.png'
+import logo4 from '../assets/logo4.png'
+import logo5 from '../assets/logo5.png'
+import logo6 from '../assets/logo6.png'
+import logo7 from '../assets/logo7.png'
+import logo8 from '../assets/logo8.png'
+import logo9 from '../assets/logo9.png'
+import logo10 from '../assets/logo10.png'
+
 export const matches = [
   {
     id: 1,
     league: 'Australian T20 League Bash',
     teams: {
-      team1: { name: 'STA', logo: 'logo1.png' },
-      team2: { name: 'SIX', logo: 'logo2.png' },
+      team1: { name: 'STA', logo: logo1 },
+      team2: { name: 'SIX', logo: logo2 },
     },
     matchTime: '01:45 PM',
     timer: '1h 53m',
     location: { team1: 'Melbourne Green', team2: 'Sydney Pink' },
     prize: 'Mega ₹14 Crores',
     topPlayers: ['M Stoinis', 'J Vince'],
-    status: 'upcoming', // or 'lineups-out'
+    status: 'upcoming',
   },
   {
     id: 2,
     league: 'Pondicherry T10',
     teams: {
-      team1: { name: 'PNXI', logo: 'logo3.png' },
-      team2: { name: 'PSXI', logo: 'logo4.png' },
+      team1: { name: 'PNXI', logo: logo3 },
+      team2: { name: 'PSXI', logo: logo4 },
     },
     matchTime: '12:30 PM',
     timer: '38m 39s',
@@ -31,8 +42,8 @@ export const matches = [
     id: 3,
     league: 'Bangladesh T20 Premier League',
     teams: {
-      team1: { name: 'FBA', logo: 'logo5.png' },
-      team2: { name: 'RAN', logo: 'logo6.png' },
+      team1: { name: 'FBA', logo: logo5 },
+      team2: { name: 'RAN', logo: logo6 },
     },
     matchTime: '01:00 PM',
     timer: '1h 08m',
@@ -45,8 +56,8 @@ export const matches = [
     id: 4,
     league: 'Pondicherry T10',
     teams: {
-      team1: { name: 'MXI', logo: 'logo7.png' },
-      team2: { name: 'KXI', logo: 'logo8.png' },
+      team1: { name: 'MXI', logo: logo7 },
+      team2: { name: 'KXI', logo: logo8 },
     },
     matchTime: '03:00 PM',
     timer: '3h 06m',
@@ -59,8 +70,8 @@ export const matches = [
     id: 5,
     league: 'Bangladesh T20 Premier League',
     teams: {
-      team1: { name: 'DC', logo: 'logo9.png' },
-      team2: { name: 'CHK', logo: 'logo10.png' },
+      team1: { name: 'DC', logo: logo9 },
+      team2: { name: 'CHK', logo: logo10 },
     },
     matchTime: '06:00 PM',
     timer: '6h 08m',
