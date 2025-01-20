@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-const Header = ({ title, onBack }) => (
-  <div className='flex items-center bg-transparent text-white p-4'>
-    <button onClick={onBack} className='mr-4 text-lg'>
-      ←
-    </button>
-    <h1 className='text-xl font-semibold'>{title}</h1>
-  </div>
-)
+// const Header = ({ title, onBack }) => (
+//   <div className='flex items-center bg-transparent text-white p-4'>
+//     <button onClick={onBack} className='mr-4 text-lg'>
+//       ←
+//     </button>
+//     <h1 className='text-xl font-semibold'>{title}</h1>
+//   </div>
+// )
 
 const TabNavigation = ({ activeTab, onTabChange }) => (
   <div className='flex justify-between bg-white shadow-md rounded-t-lg'>
@@ -79,7 +79,7 @@ const NotificationsPage = () => {
   return (
     <div className='min-h-screen'>
       {/* Header */}
-      <Header title='Notifications' onBack={() => alert('Go Back')} />
+      {/* <Header title='Notifications' onBack={() => alert('Go Back')} /> */}
 
       {/* Tab Navigation */}
       <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />

@@ -1,63 +1,63 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import Register from './pages/Register'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Devs from './pages/Devs'
-import Dashboard from './pages/Dashboard'
-import Leaderboard from './pages/Leaderboard'
-import CreateTeam from './pages/CreateTeam'
-import ForgotPassword from './pages/ForgotPassword'
-import EditProfile from './pages/EditProfile'
-import Commentary from './pages/Commentary'
-import Scorecard from './pages/Scorecard'
-import SelectSquad from './pages/SelectSquad'
-import WinningCashDetails from './pages/WinningCashDetails'
-import Stats from './pages/Stats'
-// import Navbar from './components/Navbar/Navbar'
 import background from './assets/background.jpg'
-import EnterOtp from './pages/EnterOtp'
-import EnterName from './pages/EnterName'
-import GetStarted from './pages/GetStarted'
-import Profile from './pages/Profile'
-import MyMatches from './pages/MyMatches'
-import NotificationsPage from './pages/NotificationsPage'
-import AddCash from './pages/AddCash'
-import PaymentOptions from './pages/PaymentOptions'
 
-function App() {
+import LayoutRoute from './components/layout/LayoutRoute'
+import GetStartedPage from './pages/GetStartedPage'
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import MyMatchesPage from './pages/MyMatchesPage'
+import InternationalMatchesPage from './pages/InternationalMatchesPage'
+import OtpPage from './pages/OtpPage'
+import UserNamePage from './pages/UserNamePage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import PredictionsPage from './pages/PredictionsPage'
+import CompletedMatchPage from './pages/CompletedMatchPage'
+import WalletPage from './pages/WalletPage'
+import PaymentOptionsPage from './pages/PaymentOptionsPage'
+import ProfilePage from './pages/ProfilePage'
+import NotificationsPage from './pages/NotificationsPage'
+
+const App = () => {
   return (
     <Router>
       <div
         className='min-h-screen bg-cover bg-center'
         style={{ backgroundImage: `url(${background})` }}
       >
-        {/* <Navbar />*/}
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/get-started' element={<GetStarted />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/leaderboard' element={<Leaderboard />} />
-          <Route path='/create-team' element={<CreateTeam />} />
-          <Route path='/signup' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/my-matches' element={<MyMatches />} />
-          <Route path='/notifications' element={<NotificationsPage />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/enter-otp' element={<EnterOtp />} />
-          <Route path='/enter-name' element={<EnterName />} />
-          <Route path='/edit-profile' element={<EditProfile />} />
-          <Route path='/commentary' element={<Commentary />} />
-          <Route path='/scorecard' element={<Scorecard />} />
-          <Route path='/select-squad' element={<SelectSquad />} />
-          <Route
-            path='/winning-cash-details'
-            element={<WinningCashDetails />}
-          />
-          <Route path='/stats' element={<Stats />} />
-          <Route path='/add-cash' element={<AddCash />} />
-          <Route path='/payment-options' element={<PaymentOptions />} />
-          <Route path='/humans' element={<Devs />} />
+          {/* Pages without Layout */}
+          <Route path='/get-started' element={<GetStartedPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/otp' element={<OtpPage />} />
+          <Route path='/username' element={<UserNamePage />} />
+          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+          {/* 
+        <Route path='/humans' element={<DeveloperDetailsPage />} /> */}
+
+          {/* Pages with Layout */}
+          <Route element={<LayoutRoute />}>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/my-matches' element={<MyMatchesPage />} />
+            <Route
+              path='/international-matches'
+              element={<InternationalMatchesPage />}
+            />
+            <Route path='/predictions' element={<PredictionsPage />} />
+            <Route
+              path='/match/completed/:id'
+              element={<CompletedMatchPage />}
+            />
+            <Route path='/wallet' element={<WalletPage />} />
+            <Route path='/payment-options' element={<PaymentOptionsPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/notification' element={<NotificationsPage />} />
+            {/*
+          <Route path='/edit-profile' element={<EditpPofilePage />} />
+          <Route path='/create-team' element={<CreateTeamPage />} />
+          <Route path='/edit-team' element={<EditTeamPage />} /> */}
+          </Route>
         </Routes>
       </div>
     </Router>
