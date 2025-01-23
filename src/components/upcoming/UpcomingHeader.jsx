@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 const UpcomingHeader = () => {
   return (
     <div className='p-4 rounded-lg bg-primary-50'>
@@ -21,9 +23,11 @@ const UpcomingHeader = () => {
         </div>
         <p className='text-sm text-right mt-1'>71,704 Spots</p>
       </div>
-      <button className='w-full bg-primary-600 text-white py-2 rounded hover:bg-primary-700'>
-        JOIN ₹49
-      </button>
+      <NavLink to={'/create-team'}>
+        <button className='w-full bg-primary-600 text-white py-2 rounded hover:bg-primary-700'>
+          JOIN ₹49
+        </button>
+      </NavLink>
     </div>
   )
 }

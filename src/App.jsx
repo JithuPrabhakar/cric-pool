@@ -18,6 +18,7 @@ import PaymentOptionsPage from './pages/PaymentOptionsPage'
 import ProfilePage from './pages/ProfilePage'
 import NotificationsPage from './pages/NotificationsPage'
 import UpcomingMatchPage from './pages/UpcomingMatchPage'
+import CreateTeamPage from './pages/CreateTeamPage'
 
 const App = () => {
   return (
@@ -55,9 +56,9 @@ const App = () => {
             <Route path='/payment-options' element={<PaymentOptionsPage />} />
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/notification' element={<NotificationsPage />} />
+            <Route path='/create-team' element={<CreateTeamPage />} />
             {/*
           <Route path='/edit-profile' element={<EditpPofilePage />} />
-          <Route path='/create-team' element={<CreateTeamPage />} />
           <Route path='/edit-team' element={<EditTeamPage />} /> */}
           </Route>
         </Routes>
