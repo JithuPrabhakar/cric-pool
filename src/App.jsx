@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage'
 import NotificationsPage from './pages/NotificationsPage'
 import UpcomingMatchPage from './pages/UpcomingMatchPage'
 import CreateTeamPage from './pages/CreateTeamPage'
+import LiveMatchPage from './pages/LiveMatchPage '
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
               element={<CompletedMatchPage />}
             />
             <Route path='/match/upcoming/:id' element={<UpcomingMatchPage />} />
+            <Route path='/match/live/:id' element={<LiveMatchPage />} />
             <Route path='/wallet' element={<WalletPage />} />
             <Route path='/payment-options' element={<PaymentOptionsPage />} />
             <Route path='/profile' element={<ProfilePage />} />
