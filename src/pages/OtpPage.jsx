@@ -1,9 +1,16 @@
+import { useNavigate } from 'react-router-dom'
 import Button from '../components/start/Button'
 import FormWrapper from '../components/start/FormWrapper'
 import InputField from '../components/start/InputField'
 import Top from '../components/start/Top'
 
 const OtpPage = () => {
+  const navigate = useNavigate()
+
+  const handleFormSubmit = () => {
+    navigate('/username')
+  }
+
   return (
     <div className='w-full h-screen flex flex-col items-center'>
       <Top title={'One More Step'} />
@@ -17,7 +24,10 @@ const OtpPage = () => {
           type={'number'}
           placeholder={'Enter OTP here'}
         />
-        <Button className='w-full bg-primary-800 text-white hover:bg-primary-500'>
+        <Button
+          onClick={handleFormSubmit}
+          className='w-full bg-primary-800 text-white hover:bg-primary-500'
+        >
           Submit
         </Button>
       </FormWrapper>
