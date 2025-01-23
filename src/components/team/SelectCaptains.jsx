@@ -23,7 +23,7 @@ const SelectCaptains = ({
               </span>
               <div>
                 <button
-                  className={`mr-2 ${
+                  className={`mr-2 rounded-full w-8 h-8 ${
                     captain?.id === player.id ? 'bg-green-200' : 'bg-gray-200'
                   }`}
                   onClick={() => assignCaptain(player)}
@@ -32,7 +32,7 @@ const SelectCaptains = ({
                   C
                 </button>
                 <button
-                  className={`${
+                  className={`rounded-full w-8 h-8 ${
                     viceCaptain?.id === player.id
                       ? 'bg-green-200'
                       : 'bg-gray-200'
@@ -48,7 +48,7 @@ const SelectCaptains = ({
         ))}
       </ul>
       <button
-        className='w-full bg-green-600 text-white py-2 mt-4 rounded'
+        className='right-4 left-4 fixed bottom-20 px-3 bg-green-600 text-white py-2 mt-4 rounded disabled:bg-gray-400'
         onClick={saveTeam}
         disabled={!captain || !viceCaptain}
       >

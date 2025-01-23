@@ -1,7 +1,7 @@
 import InputField from './InputField'
 import Button from './Button'
 import FormWrapper from './FormWrapper'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const FormComponent = ({
   formType,
@@ -11,6 +11,16 @@ const FormComponent = ({
   redirectLink,
 }) => {
   const isLogin = formType === 'login'
+
+  const navigate = useNavigate()
+
+  const handleFormSubmit = () => {
+    if (isLogin) {
+      navigate('/')
+    } else {
+      navigate('/otp')
+    }
+  }
 
   return (
     <FormWrapper>
@@ -29,7 +39,10 @@ const FormComponent = ({
         type='password'
         placeholder='Enter your password'
       />
-      <Button className='w-full bg-primary-800 text-white hover:bg-primary-500'>
+      <Button
+        onClick={handleFormSubmit}
+        className='w-full bg-primary-800 text-white hover:bg-primary-500'
+      >
         {buttonText}
       </Button>
       <p className='text-center text-gray-500 text-sm mt-4'>

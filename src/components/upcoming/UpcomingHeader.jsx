@@ -25,7 +25,7 @@ const UpcomingHeader = () => {
       </div>
       <NavLink to={'/create-team'}>
         <button className='w-full bg-primary-600 text-white py-2 rounded hover:bg-primary-700'>
-          JOIN ₹49
+          JOIN MATCH
         </button>
       </NavLink>
     </div>
