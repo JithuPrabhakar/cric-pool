@@ -1,20 +1,20 @@
-// import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-// import Loader from '../components/loader/Loader'
+import Loader from '../components/loader/Loader'
 import FormComponent from '../components/start/FormComponent'
 import Top from '../components/start/Top'
 
 const LoginPage = () => {
-  // const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setLoading(false), 2000)
-  //   return () => clearTimeout(timer) // Cleanup timer
-  // }, [])
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000)
+    return () => clearTimeout(timer) // Cleanup timer
+  }, [])
 
-  // if (loading) {
-  //   return <Loader />
-  // }
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className='w-full h-screen flex flex-col items-center'>

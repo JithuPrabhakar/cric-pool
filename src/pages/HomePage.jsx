@@ -1,4 +1,4 @@
-import MatchesList from '../components/Matches/MatchesList'
+import MatchesList from '../components/matches/MatchesList'
 
 const HomePage = () => {
   return (
