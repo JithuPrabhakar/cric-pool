@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react'
-import Loader from '../components/loader/Loader'
+// import { useEffect, useState } from 'react'
+// import Loader from '../components/loader/Loader'
 import Top from '../components/start/Top'
 import FormComponent from '../components/start/FormComponent'
 
 const RegisterPage = () => {
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2000)
-    return () => clearTimeout(timer)
-  }, [])
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setLoading(false), 2000)
+  //   return () => clearTimeout(timer)
+  // }, [])
 
-  if (loading) {
-    return <Loader />
-  }
+  // if (loading) {
+  //   return <Loader />
+  // }
 
   return (
     <div className='w-full h-screen flex flex-col items-center'>
