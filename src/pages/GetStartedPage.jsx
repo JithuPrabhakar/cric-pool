@@ -10,7 +10,7 @@ const GetStartedPage = () => {
 
       <div className='flex gap-4'>
         <NavLink
-          to='/signup'
+          to='/register'
           className='bg-white w-full text-center text-russian-violet-2 font-semibold px-6 py-2 rounded-lg shadow-lg hover:bg-blue hover:text-white'
         >
           Sign Up
