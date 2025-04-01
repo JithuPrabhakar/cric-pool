@@ -1,10 +1,18 @@
-const Button = ({ onClick, children, className }) => {
+const Button = ({
+  onClick,
+  children,
+  className,
+  isLoading,
+}) => {
   return (
     <button
       onClick={onClick}
-      className={`py-2 px-4 rounded-md font-semibold ${className}`}
+      disabled={isLoading}
+      className={`py-2 px-4 rounded-md font-semibold ${className} ${
+        isLoading ? "opacity-50 cursor-not-allowed" : ""
+      }`}
     >
-      {children}
+      {isLoading ? "Processing..." : children}
     </button>
   )
 }

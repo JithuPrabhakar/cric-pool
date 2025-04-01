@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import { VitePWA } from "vite-plugin-pwa"
 
 const manifestForPlugin = {
   registerType: "prompt",
@@ -58,16 +58,32 @@ const manifestForPlugin = {
     start_url: "/",
     orientation: "portrait",
   },
-};
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   server: {
     proxy: {
-      '/api': {
-        target: 'http://test.cricketwar.com',
+      "/APIProfile": {
+        target: "http://test.cricketwar.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+        rewrite: (path) =>
+          path.replace(/^\/APIProfile/, "/APIProfile"),
+      },
+      "/APIMatches": {
+        target: "http://test.cricketwar.com",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) =>
+          path.replace(/^\/APIMatches/, "/APIMatches"),
+      },
+      "/APIFantasy": {
+        target: "http://test.cricketwar.com",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) =>
+          path.replace(/^\/APIFantasy/, "/APIFantasy"),
       },
     },
   },
