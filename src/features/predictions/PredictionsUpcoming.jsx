@@ -1,5 +1,5 @@
 import MatchCard from "../../components/MatchCard"
-import { useGetUpcomingMatchesQuery } from "../api/apiSlice"
+import { useGetPredictionUpcomingMatchesQuery } from "../api/apiSlice"
 import { Link } from "react-router-dom"
 
 const PredictionsUpcoming = () => {
@@ -7,10 +7,11 @@ const PredictionsUpcoming = () => {
     data: matches,
     isLoading,
     isError,
-  } = useGetUpcomingMatchesQuery()
+  } = useGetPredictionUpcomingMatchesQuery()
 
   if (isLoading) return <p>Loading...</p>
-  if (isError) return <p>Error loading matches.</p>
+  if (isError)
+    return <p>Error loading prediction matches.</p>
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">

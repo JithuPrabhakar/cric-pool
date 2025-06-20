@@ -6,7 +6,7 @@ import {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "/", // handled by Vite proxy
   }),
   tagTypes: ["Matches", "Predictions", "Users", "Teams"],
   endpoints: (builder) => ({
@@ -16,25 +16,61 @@ export const apiSlice = createApi({
     getUpcomingMatches: builder.query({
       query: () =>
         "APIMatches/ListofUpcomingMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Matches"],
     }),
     getPastMatches: builder.query({
       query: () => "APIMatches/ListofPastMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Matches"],
     }),
     getLiveMatches: builder.query({
       query: () => "APIMatches/ListofLiveMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Matches"],
     }),
     getMatchDetails: builder.query({
       query: (id) => `APIMatches/MatchDetails?id=${id}`,
-      transformResponse: (response) => response[1] || [],
-      providesTags: (result, error, id) => [
+      transformResponse: (res) => res[1] || [],
+      providesTags: (res, err, id) => [
         { type: "Matches", id },
       ],
+    }),
+    getSquadList: builder.query({
+      query: ({ id, teamId }) =>
+        `APIMatches/GetMatchSquadList?id=${id}&team_id=${teamId}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
+    }),
+    getBattingFigure: builder.query({
+      query: ({ id, teamId }) =>
+        `APIMatches/GetMatchBattingFigure?id=${id}&team_id=${teamId}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
+    }),
+    getBowlingFigure: builder.query({
+      query: ({ id, teamId }) =>
+        `APIMatches/GetMatchBowlingFigure?id=${id}&team_id=${teamId}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
+    }),
+    getPartnership: builder.query({
+      query: ({ id, teamId }) =>
+        `APIMatches/GetMatchPartnership?id=${id}&team_id=${teamId}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
+    }),
+    getBallByBallDetails: builder.query({
+      query: ({ id, teamId }) =>
+        `APIMatches/GetMatchBallByBallDetails?id=${id}&team_id=${teamId}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
+    }),
+    getMVPDetails: builder.query({
+      query: (id) =>
+        `APIMatches/GetMatchMVPDetails?id=${id}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Matches"],
     }),
 
     // ==========================
@@ -43,37 +79,37 @@ export const apiSlice = createApi({
     getPredictionUpcomingMatches: builder.query({
       query: () =>
         "APIFantasy/ListofUpcomingMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Predictions"],
     }),
     getPredictionPastMatches: builder.query({
       query: () => "APIFantasy/ListofPastMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Predictions"],
     }),
     getPredictionLiveMatches: builder.query({
       query: () => "APIFantasy/ListofLiveMatches?page=1",
-      transformResponse: (response) => response[1] || [],
+      transformResponse: (res) => res[1] || [],
       providesTags: ["Predictions"],
     }),
     getPredictionMatchDetails: builder.query({
       query: (id) => `APIFantasy/MatchDetails?id=${id}`,
-      transformResponse: (response) => response[1] || [],
-      providesTags: (result, error, id) => [
+      transformResponse: (res) => res[1] || [],
+      providesTags: (res, err, id) => [
         { type: "Predictions", id },
       ],
     }),
     getPrizeDetails: builder.query({
       query: (id) => `APIFantasy/PrizeDetails?id=${id}`,
-      transformResponse: (response) => response[1] || [],
-      providesTags: (result, error, id) => [
+      transformResponse: (res) => res[1] || [],
+      providesTags: (res, err, id) => [
         { type: "Predictions", id },
       ],
     }),
     getWinnerDetails: builder.query({
       query: (id) => `APIFantasy/WinnerDetails?id=${id}`,
-      transformResponse: (response) => response[1] || [],
-      providesTags: (result, error, id) => [
+      transformResponse: (res) => res[1] || [],
+      providesTags: (res, err, id) => [
         { type: "Predictions", id },
       ],
     }),
@@ -113,6 +149,12 @@ export const {
   useGetPastMatchesQuery,
   useGetLiveMatchesQuery,
   useGetMatchDetailsQuery,
+  useGetSquadListQuery,
+  useGetBattingFigureQuery,
+  useGetBowlingFigureQuery,
+  useGetPartnershipQuery,
+  useGetBallByBallDetailsQuery,
+  useGetMVPDetailsQuery,
 
   // Predictions
   useGetPredictionUpcomingMatchesQuery,

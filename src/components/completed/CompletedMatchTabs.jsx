@@ -20,22 +20,25 @@ const CompletedMatchTabs = ({ match }) => {
       case "Winnings":
         return <Winnings prizes={prizes} />
       case "Leaderboard":
-        return (
-          <Leaderboard leaderboard={match.leaderboard} />
-        )
+        return <Leaderboard matchId={match.game_det_id} />
       case "Scorecard":
-        return <Scorecard matchData={match} />
+        return (
+          <Scorecard
+            matchId={match.game_det_id}
+            team1={match.team1_id}
+            team2={match.team2_id}
+          />
+        )
       case "Commentary":
         return (
           <Commentary
-            ball_by_ball_team1={match.ball_by_ball_team1}
-            ball_by_ball_team2={match.ball_by_ball_team2}
+            matchId={match.game_det_id}
+            team1={match.team1_id}
+            team2={match.team2_id}
           />
         )
       case "Stats":
-        return (
-          <Stats team1={match.team1} team2={match.team2} />
-        )
+        return <Stats matchId={match.game_det_id} />
       default:
         return null
     }

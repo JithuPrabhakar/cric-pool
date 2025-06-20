@@ -1,7 +1,10 @@
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import MyTeam from "./MyTeam"
-import { useAddUserTeamMutation } from "../api/apiSlice"
+import {
+  useGetMatchDetailsQuery,
+  useGetSquadListQuery,
+} from "../api/apiSlice"
 import CreateTeamHeader from "../../components/team/CreateTeamHeader"
 import SelectCaptains from "../../components/team/SelectCaptains"
 
@@ -13,8 +16,24 @@ const CreateTeam = () => {
   const [viceCaptain, setViceCaptain] = useState(null)
   const navigate = useNavigate()
 
-  const [addUserTeam, { isLoading, isError }] =
-    useAddUserTeamMutation()
+  const {
+    data: match,
+    isLoading: isL1,
+    isError: isE1,
+  } = useGetMatchDetailsQuery(Number(id))
+
+  const {
+    data: squadList,
+    isLoading: isL2,
+    isError: isE2,
+  } = useGetSquadListQuery({
+    id,
+    team1_id: match.team1_id,
+    team2_id: match.team2_id,
+  })
+
+  !isL1 && !isL2 && console.log(squadList)
+  !isE1 && !isE2 && console.log(error)
 
   const nextStep = () => setCurrentStep((prev) => prev + 1)
 

@@ -11,6 +11,8 @@ const MyMatchesCompletedDetails = () => {
     isError,
   } = useGetMatchDetailsQuery(Number(id))
 
+  // !isLoading && console.log(match)
+
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading match details.</p>
 

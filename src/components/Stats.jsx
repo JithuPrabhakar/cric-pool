@@ -1,29 +1,52 @@
-import { useState } from "react"
+import React, { useState } from "react"
+import { useGetMVPDetailsQuery } from "../features/api/apiSlice"
 
-const Stats = ({ team1, team2 }) => {
-  const [activeTeam, setActiveTeam] = useState(
-    team1.short_name
-  )
+const Stats = ({ matchId }) => {
+  const {
+    data: mvpData = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetMVPDetailsQuery(matchId)
 
-  // Merge batting and bowling stats for both teams
-  const teams = {
-    [team1.short_name]: {
-      name: team1.name,
-      short_name: team1.short_name,
-      players: [
-        ...team1.score.batting,
-        ...team1.score.bowling,
-      ],
-    },
-    [team2.short_name]: {
-      name: team2.name,
-      short_name: team2.short_name,
-      players: [
-        ...team2.score.batting,
-        ...team2.score.bowling,
-      ],
-    },
-  }
+  const [activeTeam, setActiveTeam] = useState(null)
+
+  if (isLoading)
+    return <p className="p-4">Loading Statss...</p>
+  if (isError)
+    return (
+      <p className="p-4 text-red-600">
+        Error: {error?.message || "Failed to load stats"}
+      </p>
+    )
+
+  // Group players by team
+  const teams = mvpData.reduce((acc, player) => {
+    const key = player.team_name || "Unknown Team"
+    if (!acc[key]) {
+      acc[key] = {
+        name: player.team_name,
+        short_name: player.team_sname,
+        players: [],
+      }
+    }
+
+    acc[key].players.push({
+      name: player.playe_name,
+      img: player.player_image,
+      points: parseFloat(player.total_point).toFixed(2),
+      percentage: `${player.batting_point} bat / ${player.bowling_point} bowl`,
+      position:
+        player.wicket !== "--" && player.ball_run !== "--"
+          ? "All-Rounder"
+          : player.bat_run !== "0"
+          ? "Batsman"
+          : "Bowler",
+      isSelected: false, // Optional: if using selection later
+    })
+
+    return acc
+  }, {})
 
   return (
     <div className="p-4">
@@ -48,7 +71,7 @@ const Stats = ({ team1, team2 }) => {
               </span>
             </div>
 
-            {/* Team Players - Batting & Bowling */}
+            {/* Team Players - MVP Breakdown */}
             {isActive && (
               <div className="bg-white p-4 rounded-md shadow mt-2">
                 <div className="flex justify-between text-gray-600 font-semibold border-b pb-2">

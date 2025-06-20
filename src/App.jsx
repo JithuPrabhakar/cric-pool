@@ -25,7 +25,7 @@ import MyMatchesCompleted from "./features/mymatches/MyMatchesCompleted"
 import MyMatchesUpcomingDetails from "./features/mymatches/MyMatchesUpcomingDetails"
 import MyMatchesLiveDetails from "./features/mymatches/MyMatchesLiveDetails"
 import MyMatchesCompletedDetails from "./features/mymatches/MyMatchesCompletedDetails"
-// import CreateTeam from "./features/team/CreateTeam"
+import CreateTeam from "./features/team/CreateTeam"
 // import International from "./features/international/International"
 
 const App = () => {
@@ -102,17 +102,17 @@ const App = () => {
             path="my-matches/completed/match/:id"
             element={<MyMatchesCompletedDetails />}
           />
-        </Route>
 
-        {/* <Route
+          {/* <Route
           path="/international-matches"
           element={<International />}
-        />
+          /> */}
 
-        <Route
-          path="/create-team/:id"
-          element={<CreateTeam />}
-        /> */}
+          <Route
+            path="/create-team/:id"
+            element={<CreateTeam />}
+          />
+        </Route>
       </Routes>
     </Router>
   )

@@ -1,12 +1,12 @@
 import { memo } from "react"
-import { useGetSingleUpcomingMatchQuery } from "../../features/api/apiSlice"
+import { useGetPredictionUpcomingMatchesQuery } from "../../features/api/apiSlice"
 
 const CreateTeamHeader = memo(({ id }) => {
   const {
     data: match,
     isLoading,
     isError,
-  } = useGetSingleUpcomingMatchQuery(id)
+  } = useGetPredictionUpcomingMatchesQuery(id)
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading match details.</p>

@@ -1,5 +1,5 @@
 import MatchCard from "../../components/MatchCard"
-import { useGetLiveMatchesQuery } from "../api/apiSlice"
+import { useGetPredictionLiveMatchesQuery } from "../api/apiSlice"
 import { Link } from "react-router-dom"
 
 const PredictionsLive = () => {
@@ -7,7 +7,7 @@ const PredictionsLive = () => {
     data: matches,
     isLoading,
     isError,
-  } = useGetLiveMatchesQuery()
+  } = useGetPredictionLiveMatchesQuery()
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading matches.</p>
