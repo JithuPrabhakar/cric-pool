@@ -1,70 +1,119 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import background from './assets/background.jpg'
-
-import LayoutRoute from './components/layout/LayoutRoute'
-import GetStartedPage from './pages/GetStartedPage'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import MyMatchesPage from './pages/MyMatchesPage'
-import InternationalMatchesPage from './pages/InternationalMatchesPage'
-import OtpPage from './pages/OtpPage'
-import UserNamePage from './pages/UserNamePage'
-import ForgotPasswordPage from './pages/ForgotPasswordPage'
-import PredictionsPage from './pages/PredictionsPage'
-import CompletedMatchPage from './pages/CompletedMatchPage'
-import WalletPage from './pages/WalletPage'
-import PaymentOptionsPage from './pages/PaymentOptionsPage'
-import ProfilePage from './pages/ProfilePage'
-import NotificationsPage from './pages/NotificationsPage'
-import UpcomingMatchPage from './pages/UpcomingMatchPage'
-import CreateTeamPage from './pages/CreateTeamPage'
-import LiveMatchPage from './pages/LiveMatchPage '
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom"
+import MainLayout from "./pages/MainLayout"
+import LoginLayout from "./pages/LoginLayout"
+import Login from "./features/auth/Login"
+import Register from "./features/auth/Register"
+import ForgotPassword from "./features/auth/ForgotPassword"
+import Otp from "./features/auth/Otp"
+import GetStarted from "./features/auth/GetStarted"
+import Home from "./features/home/Home"
+import Predictions from "./features/predictions/Predictions"
+import Upcoming from "./features/predictions/PredictionsUpcoming"
+import Live from "./features/predictions/PredictionsLive"
+import Completed from "./features/predictions/PredictionsCompleted"
+import PredictionsUpcomingDetails from "./features/predictions/PredictionsUpcomingDetails"
+import PredictionsLiveDetails from "./features/predictions/PredictionsLiveDetails"
+import PredictionsCompletedDetails from "./features/predictions/PredictionsCompletedDetails"
+import MyMatches from "./features/mymatches/MyMatches"
+import MyMatchesUpcoming from "./features/mymatches/MyMatchesUpcoming"
+import MyMatchesLive from "./features/mymatches/MyMatchesLive"
+import MyMatchesCompleted from "./features/mymatches/MyMatchesCompleted"
+import MyMatchesUpcomingDetails from "./features/mymatches/MyMatchesUpcomingDetails"
+import MyMatchesLiveDetails from "./features/mymatches/MyMatchesLiveDetails"
+import MyMatchesCompletedDetails from "./features/mymatches/MyMatchesCompletedDetails"
+import CreateTeam from "./features/team/CreateTeam"
+// import International from "./features/international/International"
 
 const App = () => {
   return (
     <Router>
-      <div
-        className='min-h-screen bg-cover bg-center'
-        style={{ backgroundImage: `url(${background})` }}
-      >
-        <Routes>
-          {/* Pages without Layout */}
-          <Route path='/get-started' element={<GetStartedPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/otp' element={<OtpPage />} />
-          <Route path='/username' element={<UserNamePage />} />
-          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-          {/* 
-        <Route path='/humans' element={<DeveloperDetailsPage />} /> */}
+      <Routes>
+        {/* Auth Routes */}
+        <Route element={<LoginLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/otp" element={<Otp />} />
+          <Route
+            path="/get-started"
+            element={<GetStarted />}
+          />
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword />}
+          />
+        </Route>
 
-          {/* Pages with Layout */}
-          <Route element={<LayoutRoute />}>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/my-matches' element={<MyMatchesPage />} />
+        {/* Main Routes */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+
+          <Route
+            path="/predictions"
+            element={<Predictions />}
+          >
+            <Route path="upcoming" element={<Upcoming />} />
+            <Route path="live" element={<Live />} />
             <Route
-              path='/international-matches'
-              element={<InternationalMatchesPage />}
+              path="completed"
+              element={<Completed />}
             />
-            <Route path='/predictions' element={<PredictionsPage />} />
-            <Route
-              path='/match/completed/:id'
-              element={<CompletedMatchPage />}
-            />
-            <Route path='/match/upcoming/:id' element={<UpcomingMatchPage />} />
-            <Route path='/match/live/:id' element={<LiveMatchPage />} />
-            <Route path='/wallet' element={<WalletPage />} />
-            <Route path='/payment-options' element={<PaymentOptionsPage />} />
-            <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/notification' element={<NotificationsPage />} />
-            <Route path='/create-team' element={<CreateTeamPage />} />
-            {/*
-          <Route path='/edit-profile' element={<EditpPofilePage />} />
-          <Route path='/edit-team' element={<EditTeamPage />} /> */}
           </Route>
-        </Routes>
-      </div>
+
+          <Route
+            path="predictions/upcoming/match/:id"
+            element={<PredictionsUpcomingDetails />}
+          />
+          <Route
+            path="predictions/live/match/:id"
+            element={<PredictionsLiveDetails />}
+          />
+          <Route
+            path="predictions/completed/match/:id"
+            element={<PredictionsCompletedDetails />}
+          />
+
+          <Route path="/my-matches" element={<MyMatches />}>
+            <Route
+              path="upcoming"
+              element={<MyMatchesUpcoming />}
+            />
+            <Route
+              path="live"
+              element={<MyMatchesLive />}
+            />
+            <Route
+              path="completed"
+              element={<MyMatchesCompleted />}
+            />
+          </Route>
+          <Route
+            path="my-matches/upcoming/match/:id"
+            element={<MyMatchesUpcomingDetails />}
+          />
+          <Route
+            path="my-matches/live/match/:id"
+            element={<MyMatchesLiveDetails />}
+          />
+          <Route
+            path="my-matches/completed/match/:id"
+            element={<MyMatchesCompletedDetails />}
+          />
+
+          {/* <Route
+          path="/international-matches"
+          element={<International />}
+          /> */}
+
+          <Route
+            path="/create-team/:id"
+            element={<CreateTeam />}
+          />
+        </Route>
+      </Routes>
     </Router>
   )
 }
