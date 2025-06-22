@@ -3,7 +3,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react"
 
-const baseUrl = 'https://test.cricketwar.com/'
+const baseUrl = 'https://cricketwar.com/'
 
 export const apiSlice = createApi({
   reducerPath: "api",
