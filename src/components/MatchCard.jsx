@@ -4,10 +4,10 @@ const MatchCard = ({ match }) => {
   return (
     <div className="bg-white shadow-2xl border-2 rounded-lg flex flex-col gap-2">
       <div className="flex justify-between items-center px-4 py-2 bg-violet-100 text-muted">
-        <h3 className="text-sm font-semibold">
+        <h3 className="text-[12px] font-semibold">
           {match.tournament_name}
         </h3>
-        <p className="text-xs">{match.date}</p>
+        <p className="text-[10px]">{match.date}</p>
       </div>
 
       <div className="px-4 pb-2">
@@ -19,7 +19,7 @@ const MatchCard = ({ match }) => {
               className="w-12 h-12 object-contain"
             />
             <p className="text-lg font-medium">
-              {match.team1_name}
+              {match.team1_sname}
             </p>
             <p className="text-sm font-medium">
               {match.team1_name}
@@ -39,7 +39,7 @@ const MatchCard = ({ match }) => {
               className="w-12 h-12 object-contain"
             />
             <p className="text-lg font-medium">
-              {match.team2_name}
+              {match.team2_sname}
             </p>
             <p className="text-sm font-medium">
               {match.team2_name}
