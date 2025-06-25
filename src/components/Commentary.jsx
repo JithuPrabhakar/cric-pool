@@ -44,16 +44,6 @@ const CommentaryItem = ({ item }) => {
               ` (by ${item.fielder_name})`}
           </div>
         )}
-
-        {/* Optional rich commentary from backend */}
-        {item.last_ball_det && (
-          <div
-            className="mt-2 text-xs text-gray-600"
-            dangerouslySetInnerHTML={{
-              __html: item.last_ball_det,
-            }}
-          />
-        )}
       </div>
     </div>
   )
@@ -83,23 +73,31 @@ const OverSummary = ({ overData, overNumber }) => {
   )
 }
 
-const Commentary = ({ matchId, teamId }) => {
+const Commentary = ({ matchId, team1, team2 }) => {
+  console.log(matchId, team1, team2)
   const {
     data: team1Data,
     isLoading: loading1,
     isError: error1,
   } = useGetBallByBallDetailsQuery({
     matchId,
-    teamId,
+    team1,
   })
-
-  !loading1 && console.log(team1Data)
-  error1 && console.log(error1)
+  const {
+    data: team2Data,
+    isLoading: loading2,
+    isError: error2,
+  } = useGetBallByBallDetailsQuery({
+    matchId,
+    team2,
+  })
 
   const [activeInning, setActiveInning] = useState("first")
 
-  // const firstInnings = commentary?.firstInnings || []
-  // const secondInnings = commentary?.secondInnings || []
+  const firstInnings =
+    team1Data?.filter((item) => item.Round === "1") || []
+  const secondInnings =
+    team2Data?.filter((item) => item.Round === "2") || []
 
   const groupByOver = (data) => {
     if (!Array.isArray(data)) return {}
@@ -163,12 +161,12 @@ const Commentary = ({ matchId, teamId }) => {
                   {balls
                     .sort(
                       (a, b) =>
-                        parseFloat(b.over) -
-                        parseFloat(a.over)
+                        parseFloat(a.overs) -
+                        parseFloat(b.overs)
                     )
                     .map((ball, idx) => (
                       <CommentaryItem
-                        key={`${ball.over}-${idx}`}
+                        key={`${ball.overs}-${idx}`}
                         item={ball}
                       />
                     ))}
