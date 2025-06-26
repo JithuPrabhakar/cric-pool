@@ -3,235 +3,205 @@ import {
   useGetBattingFigureQuery,
   useGetBowlingFigureQuery,
 } from "../features/api/apiSlice"
+import {
+  IoIosArrowDown,
+  IoIosArrowUp,
+} from "react-icons/io"
 
 const Scorecard = ({ matchId, team1, team2 }) => {
-  const [active, setActive] = useState(false)
-  // Batting + Bowling for team1
+  const [activeInning, setActiveInning] = useState("first")
+
   const {
     data: team1Batting,
-    isLoading: isLoadingTeam1Batting,
-    isError: isErrorTeam1Batting,
+    isLoading: loading1B,
+    isError: error1B,
   } = useGetBattingFigureQuery({
     id: matchId,
     teamId: team1,
-  })
-
-  const {
-    data: team1Bowling,
-    isLoading: isLoadingTeam1Bowling,
-    isError: isErrorTeam1Bowling,
-  } = useGetBowlingFigureQuery({
-    id: matchId,
-    teamId: team1,
-  })
-
-  // Batting + Bowling for team2
-  const {
-    data: team2Batting,
-    isLoading: isLoadingTeam2Batting,
-    isError: isErrorTeam2Batting,
-  } = useGetBattingFigureQuery({
-    id: matchId,
-    teamId: team2,
   })
 
   const {
     data: team2Bowling,
-    isLoading: isLoadingTeam2Bowling,
-    isError: isErrorTeam2Bowling,
+    isLoading: loading2Bowl,
+    isError: error2Bowl,
   } = useGetBowlingFigureQuery({
     id: matchId,
     teamId: team2,
   })
 
-  if (
-    isLoadingTeam1Batting ||
-    isLoadingTeam1Bowling ||
-    isLoadingTeam2Batting ||
-    isLoadingTeam2Bowling
-  ) {
-    return <div>Loading match stats...</div>
-  }
+  const {
+    data: team2Batting,
+    isLoading: loading2B,
+    isError: error2B,
+  } = useGetBattingFigureQuery({
+    id: matchId,
+    teamId: team2,
+  })
+
+  const {
+    data: team1Bowling,
+    isLoading: loading1Bowl,
+    isError: error1Bowl,
+  } = useGetBowlingFigureQuery({
+    id: matchId,
+    teamId: team1,
+  })
 
   if (
-    isErrorTeam1Batting ||
-    isErrorTeam1Bowling ||
-    isErrorTeam2Batting ||
-    isErrorTeam2Bowling
-  ) {
-    return <div>Error fetching match stats.</div>
-  }
+    loading1B ||
+    loading2B ||
+    loading1Bowl ||
+    loading2Bowl
+  )
+    return (
+      <p className="p-4 text-gray-600">
+        Loading match stats...
+      </p>
+    )
+
+  if (error1B || error2B || error1Bowl || error2Bowl)
+    return (
+      <p className="p-4 text-red-500">
+        Error loading match stats.
+      </p>
+    )
 
   const getDismissalText = (player) => {
-    if (player.wicket_type === "Not Out") return "Not Out"
-    if (player.wicket_type === "Bowled")
-      return `b ${player.bowler}`
-    if (player.wicket_type === "LBW")
-      return `lbw b ${player.bowler}`
-    if (
-      player.wicket_type === "Caught" ||
-      player.wicket_type === "Catch Out"
-    )
-      return `c ${player.fielder_name} b ${player.bowler}`
-    if (player.wicket_type === "Run Out")
-      return `run out (${player.fielder_name})`
-
-    return player.wicket_type || "Unknown"
+    switch (player.wicket_type) {
+      case "Not Out":
+        return "Not Out"
+      case "Bowled":
+        return `b ${player.bowler}`
+      case "LBW":
+        return `lbw b ${player.bowler}`
+      case "Caught":
+      case "Catch Out":
+        return `c ${player.fielder_name} b ${player.bowler}`
+      case "Run Out":
+        return `run out (${player.fielder_name})`
+      default:
+        return player.wicket_type || "Unknown"
+    }
   }
 
-  return (
-    <div className="p-4 space-y-4 font-sans">
-      <p
-        onClick={() => setActive(true)}
-        className="font-semibold text-gray-400 mb-2"
+  const renderInnings = (
+    type,
+    batting,
+    bowling,
+    teamName
+  ) => (
+    <div className="bg-gray-100 rounded-md overflow-hidden">
+      <div
+        className="flex justify-between items-center px-4 py-3 bg-muted text-white cursor-pointer"
+        onClick={() =>
+          setActiveInning(
+            activeInning === type ? null : type
+          )
+        }
       >
-        First Innings
-      </p>
-      <p className="font-semibold text-gray-700 mb-2">
-        Batting - {team1Batting[0].team_name}
-      </p>
-      {active && (
-        <div>
-          {team1Batting.map((player, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center p-2 border-b"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={player.batsman_logo}
-                  alt={player.batsman}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-medium">
-                    {player.batsman}
+        <h3 className="font-semibold text-lg capitalize">
+          {type === "first"
+            ? "First Innings"
+            : "Second Innings"}
+        </h3>
+        {activeInning === type ? (
+          <IoIosArrowUp className="text-xl" />
+        ) : (
+          <IoIosArrowDown className="text-xl" />
+        )}
+      </div>
+
+      {activeInning === type && (
+        <div className="p-4 bg-white space-y-6">
+          <div>
+            <h4 className="font-semibold text-gray-700 mb-2">
+              Batting - {teamName}
+            </h4>
+            {batting.map((player, i) => (
+              <div
+                key={i}
+                className="flex justify-between items-center p-2 border-b"
+              >
+                <div className="flex items-center gap-2">
+                  <img
+                    src={player.batsman_logo}
+                    alt={player.batsman}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-medium">
+                      {player.batsman}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {getDismissalText(player)}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right text-sm">
+                  <p className="font-semibold">
+                    {player.runs} ({player.balls})
                   </p>
-                  <p className="text-gray-500 text-sm">
-                    {getDismissalText(player)}
+                  <p className="text-xs text-gray-500">
+                    SR: {player.strikerate}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    4s: {player.four} • 6s: {player.six}
                   </p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="font-semibold">
-                  {player.runs} ({player.balls})
-                </p>
-                <p className="text-xs text-gray-500">
-                  SR: {player.strikerate}
-                </p>
-                <p className="text-xs text-gray-400">
-                  4s: {player.four} • 6s: {player.six}
-                </p>
-              </div>
-            </div>
-          ))}
-          <p className="font-semibold text-gray-700 mb-2">
-            Bowling - {team1Bowling[0].team_name}
-          </p>
-          {team2Bowling.map((player, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-2 border-b gap-3"
-            >
-              <div className="flex items-center gap-3">
-                <img
-                  src={player.bowler_logo}
-                  alt={player.bowler}
-                  className="w-10 h-10 rounded-full object-cover border"
-                />
-                <div>
-                  <p className="font-medium">
-                    {player.bowler}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Overs: {player.over} • Runs:{" "}
-                    {player.runs} • Wkts: {player.wicket}
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    Econ: {player.runrate} • Dot Balls:{" "}
-                    {player.dotball}
-                  </p>
+            ))}
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-gray-700 mb-2">
+              Bowling - {bowling[0]?.team_name || ""}
+            </h4>
+            {bowling.map((player, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between p-2 border-b gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={player.bowler_logo}
+                    alt={player.bowler}
+                    className="w-10 h-10 rounded-full object-cover border"
+                  />
+                  <div>
+                    <p className="font-medium">
+                      {player.bowler}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Overs: {player.over} • Runs:{" "}
+                      {player.runs} • Wkts: {player.wicket}
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      Econ: {player.runrate} • Dot Balls:{" "}
+                      {player.dotball}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
-      <p
-        onClick={() => setActive(false)}
-        className="font-semibold text-gray-400 mb-2"
-      >
-        Second Innings
-      </p>
-      <p className="font-semibold text-gray-700 mb-2">
-        Batting - {team2Batting[0].team_name}
-      </p>
-      {!active && (
-        <div className="active">
-          {team2Batting.map((player, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center p-2 border-b"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={player.batsman_logo}
-                  alt={player.batsman}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-medium">
-                    {player.batsman}
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    {getDismissalText(player)}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="font-semibold">
-                  {player.runs} ({player.balls})
-                </p>
-                <p className="text-xs text-gray-500">
-                  SR: {player.strikerate}
-                </p>
-                <p className="text-xs text-gray-400">
-                  4s: {player.four} • 6s: {player.six}
-                </p>
-              </div>
-            </div>
-          ))}
-          <p className="font-semibold text-gray-700 mb-2">
-            Bowling - {team2Bowling[0].team_name}
-          </p>
-          {team1Bowling.map((player, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-2 border-b gap-3"
-            >
-              <div className="flex items-center gap-3">
-                <img
-                  src={player.bowler_logo}
-                  alt={player.bowler}
-                  className="w-10 h-10 rounded-full object-cover border"
-                />
-                <div>
-                  <p className="font-medium">
-                    {player.bowler}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Overs: {player.over} • Runs:{" "}
-                    {player.runs} • Wkts: {player.wicket}
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    Econ: {player.runrate} • Dot Balls:{" "}
-                    {player.dotball}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    </div>
+  )
+
+  return (
+    <div className="space-y-6 p-4">
+      {renderInnings(
+        "first",
+        team1Batting,
+        team2Bowling,
+        team1Batting[0]?.team_name
+      )}
+      {renderInnings(
+        "second",
+        team2Batting,
+        team1Bowling,
+        team2Batting[0]?.team_name
       )}
     </div>
   )
