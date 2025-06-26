@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className="mx-auto w-12 h-12 bg-gray-300 rounded-full border-4 border-white">
           {/* Add Logo Image */}
         </div>
-        <p className="text-2xl font-bold">Cric War</p>
+        <p className="text-xl font-bold">MY ROYAL TEAM</p>
       </div>
       <div className="flex gap-4 items-center">
         <NavLink to="/notification">
