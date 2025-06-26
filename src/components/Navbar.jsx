@@ -2,12 +2,12 @@ import { NavLink } from "react-router-dom"
 import { IoPersonCircle } from "react-icons/io5"
 import { IoNotificationsSharp } from "react-icons/io5"
 
-import background from "../assets/background.jpg"
+import background from "../assets/background.png"
 
 const Navbar = () => {
   return (
     <header
-      className="fixed top-0 left-0 w-full text-white p-4 shadow-md z-10 flex items-center justify-between"
+      className="fixed top-0 left-0 w-full text-white p-4 z-10 flex items-center justify-between"
       style={{ backgroundImage: `url(${background})` }}
     >
       <div className="flex gap-8 items-center">
