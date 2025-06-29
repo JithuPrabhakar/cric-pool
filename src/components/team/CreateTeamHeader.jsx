@@ -1,17 +1,15 @@
 import { memo } from "react"
-import { useGetPredictionUpcomingMatchesQuery } from "../../features/api/apiSlice"
+import { useGetPredictionMatchDetailsQuery } from "../../features/api/apiSlice"
 
 const CreateTeamHeader = memo(({ id }) => {
   const {
     data: match,
     isLoading,
     isError,
-  } = useGetPredictionUpcomingMatchesQuery(id)
+  } = useGetPredictionMatchDetailsQuery(id)
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading match details.</p>
-
-  console.log(match)
 
   return (
     <div className="p-4 bg-primary text-center">
@@ -21,23 +19,23 @@ const CreateTeamHeader = memo(({ id }) => {
       <div className="flex justify-between items-center text-white">
         <div className="flex flex-col items-center">
           <img
-            src={match.team1.logo}
-            alt={match.team1.short_name}
+            src={match[0].team1_logo}
+            alt={match[0].team1_sname}
             className="w-12 h-12 object-contain"
           />
           <p className="text-sm font-medium">
-            {match.team1.name}
+            {match[0].team1_name}
           </p>
         </div>
         <div className="text-center"></div>
         <div className="flex flex-col items-center">
           <img
-            src={match.team2.logo}
-            alt={match.team2.short_name}
+            src={match[0].team2_logo}
+            alt={match[0].team2_sname}
             className="w-12 h-12 object-contain"
           />
           <p className="text-sm font-medium">
-            {match.team2.name}
+            {match[0].team2_name}
           </p>
         </div>
       </div>

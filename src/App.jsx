@@ -26,7 +26,8 @@ import MyMatchesUpcomingDetails from "./features/mymatches/MyMatchesUpcomingDeta
 import MyMatchesLiveDetails from "./features/mymatches/MyMatchesLiveDetails"
 import MyMatchesCompletedDetails from "./features/mymatches/MyMatchesCompletedDetails"
 import CreateTeam from "./features/team/CreateTeam"
-// import International from "./features/international/International"
+import International from "./features/international/International"
+import Profile from "./components/profile/profile"
 
 const App = () => {
   return (
@@ -103,14 +104,25 @@ const App = () => {
             element={<MyMatchesCompletedDetails />}
           />
 
-          {/* <Route
-          path="/international-matches"
-          element={<International />}
-          /> */}
+          <Route
+            path="/international-matches"
+            element={<International />}
+          />
 
           <Route
             path="/create-team/:id"
             element={<CreateTeam />}
+          />
+
+          <Route path="/profile" element={<Profile />} />
+
+          <Route
+            path="*"
+            element={
+              <div className="text-center mt-5">
+                <h1>404 - Page Not Found</h1>
+              </div>
+            }
           />
         </Route>
       </Routes>
