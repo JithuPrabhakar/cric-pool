@@ -16,18 +16,15 @@ const CommentaryItem = ({ item }) => {
   }
 
   return (
-    <div className="flex gap-4 border-b border-gray-200 p-4">
-      {/* Ball number */}
+    <div className="flex gap-2 border-b border-gray-200 p-3">
       <div className="flex-shrink-0 w-16">
         <div
-          className={`rounded-full h-10 w-10 flex justify-center items-center text-center ${getBallStyle()}`}
+          className={`rounded-full h-8 w-8 text-sm flex justify-center items-center text-center ${getBallStyle()}`}
         >
           {item.overs}
         </div>
       </div>
-
-      {/* Commentary Details */}
-      <div className="flex-grow text-sm text-gray-800">
+      <div className="flex-grow text-xs text-gray-800">
         <p>
           <strong>Bowler:</strong> {item.bowler_name} <br />
           <strong>To:</strong> {item.striker_name}
@@ -36,7 +33,6 @@ const CommentaryItem = ({ item }) => {
               item.run !== "1" ? "s" : ""
             }`}
         </p>
-
         {item.wicket_status === "True" && (
           <div className="text-red-600 font-semibold mt-1">
             WICKET: {item.striker_name} - {item.wicket_type}
@@ -49,127 +45,79 @@ const CommentaryItem = ({ item }) => {
   )
 }
 
-const OverSummary = ({ overData, overNumber }) => {
-  const totalRuns = overData.reduce(
-    (sum, ball) => sum + parseInt(ball.run || 0),
-    0
-  )
-  const totalWickets = overData.filter(
-    (ball) => ball.wicket_status === "True"
-  ).length
-  const bowler = overData[0]?.bowler_name || ""
-
-  return (
-    <div className="border-b border-gray-200 p-4 bg-gray-50">
-      <h2 className="text-lg font-semibold text-gray-800">
-        End of over {overNumber}
-      </h2>
-      <p className="text-sm text-gray-600">
-        {bowler} • {totalRuns} Run
-        {totalRuns !== 1 ? "s" : ""} • {totalWickets} Wicket
-        {totalWickets !== 1 ? "s" : ""}
-      </p>
-    </div>
-  )
-}
-
 const Commentary = ({ matchId, team1, team2 }) => {
-  console.log(matchId, team1, team2)
+  const [activeTeam, setActiveTeam] = useState(null)
+
   const {
-    data: team1Data,
+    data: team1Data = [],
     isLoading: loading1,
     isError: error1,
   } = useGetBallByBallDetailsQuery({
-    matchId,
-    team1,
+    id: matchId,
+    teamId: team1,
   })
+
   const {
-    data: team2Data,
+    data: team2Data = [],
     isLoading: loading2,
     isError: error2,
   } = useGetBallByBallDetailsQuery({
-    matchId,
-    team2,
+    id: matchId,
+    teamId: team2,
   })
-
-  const [activeInning, setActiveInning] = useState("first")
-
-  const firstInnings =
-    team1Data?.filter((item) => item.Round === "1") || []
-  const secondInnings =
-    team2Data?.filter((item) => item.Round === "2") || []
 
   const groupByOver = (data) => {
     if (!Array.isArray(data)) return {}
     return data.reduce((acc, ball) => {
       const overNum = Math.floor(parseFloat(ball.overs)) + 1
-      if (!acc[overNum]) {
-        acc[overNum] = []
-      }
+      if (!acc[overNum]) acc[overNum] = []
       acc[overNum].push(ball)
       return acc
     }, {})
   }
 
-  const firstInningsOvers = groupByOver(firstInnings)
-  const secondInningsOvers = groupByOver(secondInnings)
-
-  const renderInnings = (
-    inningsData,
-    inningsOvers,
+  const renderTeam = (
+    teamData,
+    oversGrouped,
     title,
     key
   ) => {
-    if (!inningsData.length) return null
+    if (!teamData.length) return null
 
     return (
-      <div className="mb-4">
-        {/* Accordion Header */}
+      <div className="py-2">
         <div
-          className="bg-gray-200 p-4 cursor-pointer flex justify-between items-center rounded-md"
+          className="bg-gray-200 py-2 px-4 cursor-pointer flex justify-between items-center rounded-md"
           onClick={() =>
-            setActiveInning(
-              activeInning === key ? null : key
-            )
+            setActiveTeam(activeTeam === key ? null : key)
           }
         >
-          <h2 className="text-xl font-bold">{title}</h2>
-          <span className="text-gray-600">
-            {activeInning === key ? "▲" : "▼"}
+          <h2 className="text-md font-bold">{title}</h2>
+          <span className="text-gray-600 text-[10px]">
+            {activeTeam === key ? "▲" : "▼"}
           </span>
         </div>
 
-        {/* Accordion Content */}
-        {activeInning === key && (
+        {activeTeam === key && (
           <div className="divide-y divide-gray-200 bg-white p-4 rounded-md shadow">
-            {Object.entries(inningsOvers)
+            {Object.entries(oversGrouped)
               .sort(
-                ([a], [b]) => parseFloat(b) - parseFloat(a)
+                (a, b) =>
+                  parseFloat(b[0]) - parseFloat(a[0])
               )
               .map(([overNum, balls]) => (
                 <React.Fragment key={overNum}>
-                  {balls.some(
-                    (ball) =>
-                      parseFloat(ball.over) ===
-                      parseFloat(overNum)
-                  ) && (
-                    <OverSummary
-                      overData={balls}
-                      overNumber={overNum}
+                  <div className="border-b border-gray-200 p-4 bg-gray-50">
+                    <h2 className="text-md font-semibold text-gray-800">
+                      End of over {overNum}
+                    </h2>
+                  </div>
+                  {balls.map((ball, idx) => (
+                    <CommentaryItem
+                      key={`${ball.overs}-${idx}`}
+                      item={ball}
                     />
-                  )}
-                  {balls
-                    .sort(
-                      (a, b) =>
-                        parseFloat(a.overs) -
-                        parseFloat(b.overs)
-                    )
-                    .map((ball, idx) => (
-                      <CommentaryItem
-                        key={`${ball.overs}-${idx}`}
-                        item={ball}
-                      />
-                    ))}
+                  ))}
                 </React.Fragment>
               ))}
           </div>
@@ -178,29 +126,27 @@ const Commentary = ({ matchId, team1, team2 }) => {
     )
   }
 
-  if (!firstInnings.length && !secondInnings.length) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-4">
-        <p className="text-gray-500 text-center">
-          No commentary available
-        </p>
-      </div>
-    )
-  }
+  if (loading1 || loading2)
+    return <p>Loading commentary...</p>
+  if (error1 || error2)
+    return <p>Error loading commentary</p>
+
+  const team1Overs = groupByOver(team1Data)
+  const team2Overs = groupByOver(team2Data)
 
   return (
     <div className="max-w-2xl mx-auto">
-      {renderInnings(
-        firstInnings,
-        firstInningsOvers,
+      {renderTeam(
+        team1Data,
+        team1Overs,
         "First Innings",
-        "first"
+        "team1"
       )}
-      {renderInnings(
-        secondInnings,
-        secondInningsOvers,
+      {renderTeam(
+        team2Data,
+        team2Overs,
         "Second Innings",
-        "second"
+        "team2"
       )}
     </div>
   )
