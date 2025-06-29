@@ -195,13 +195,13 @@ const Scorecard = ({ matchId, team1, team2 }) => {
         "first",
         team1Batting,
         team2Bowling,
-        team1Batting[0]?.team_name
+        team1Bowling[0]?.team_name
       )}
       {renderInnings(
         "second",
         team2Batting,
         team1Bowling,
-        team2Batting[0]?.team_name
+        team2Bowling[0]?.team_name
       )}
     </div>
   )
