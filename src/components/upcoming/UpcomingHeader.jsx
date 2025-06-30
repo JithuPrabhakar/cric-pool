@@ -38,7 +38,7 @@ const UpcomingHeader = ({ prizePool, spots, matchId }) => {
             Total Prize Pool
           </p>
           <p className="text-lg font-bold text-white">
-            {prizePool}
+            {prizePool} 50,000
           </p>
         </div>
         <div className="text-right text-white">
@@ -46,7 +46,7 @@ const UpcomingHeader = ({ prizePool, spots, matchId }) => {
             Total Spots
           </p>
           <p className="text-sm text-right mt-1 text-white">
-            {spots} Spots
+            {spots} 10,000 Spots
           </p>
         </div>
       </div>

@@ -32,8 +32,9 @@ const LiveMatchTabs = ({ match }) => {
       case "Commentary":
         return (
           <Commentary
-            ball_by_ball_team1={match.ball_by_ball_team1}
-            ball_by_ball_team2={match.ball_by_ball_team2}
+            matchId={match.game_det_id}
+            team1={match.team1_id}
+            team2={match.team2_id}
           />
         )
       case "Stats":
