@@ -32,16 +32,15 @@ const Leaderboard = ({ matchId }) => {
 
   return (
     <div className="p-4 font-sans">
-      {/* Last updated info (can be dynamic later) */}
-      <div className="text-center text-gray-500 text-sm mb-4">
-        Points last updated at{" "}
-        <span className="font-medium">41.3 overs</span>
-      </div>
-
       {/* App User Section */}
       {appUser && (
         <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
           <div>
+            <img
+              src={appUser.user_logo}
+              alt={appUser.user_name}
+              className="w-10 h-10 rounded-full object-cover border"
+            />
             <p className="font-medium text-green-800">
               {appUser.user_name} (T1)
             </p>
@@ -63,8 +62,7 @@ const Leaderboard = ({ matchId }) => {
           >
             <div>
               <p className="font-medium text-gray-700">
-                {player.user_name || "Unnamed"} (T
-                {index + 2})
+                {player.user_name || "Unnamed"} (T1)
               </p>
             </div>
             <div className="text-right">

@@ -27,7 +27,7 @@ import MyMatchesLiveDetails from "./features/mymatches/MyMatchesLiveDetails"
 import MyMatchesCompletedDetails from "./features/mymatches/MyMatchesCompletedDetails"
 import CreateTeam from "./features/team/CreateTeam"
 import International from "./features/international/International"
-import Profile from "./components/profile/profile"
+import Profile from "./components/profile/Profile"
 
 const App = () => {
   return (
