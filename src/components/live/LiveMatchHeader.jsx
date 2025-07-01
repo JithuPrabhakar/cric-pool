@@ -33,7 +33,7 @@ const LiveMatchHeader = ({ match }) => {
           {/* Team 1 Details */}
           <div className="text-center">
             <img
-              src={match.team1_Logo}
+              src={match.team1_logo}
               alt={`${match.team1_sname} Logo`}
               className="w-10 h-10 mx-auto mb-2"
             />
