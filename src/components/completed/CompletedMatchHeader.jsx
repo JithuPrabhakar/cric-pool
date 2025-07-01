@@ -22,20 +22,22 @@ const CompletedMatchHeader = ({ match }) => {
         </button>
       </NavLink>
 
-      <h1 className="text-lg font-semibold text-center">
-        {match.team1_name} vs {match.team2_name}
-      </h1>
+      <div className="text-sm font-bold text-center">
+        <h1>{match.team1_name}</h1>
+        vs
+        <h1>{match.team2_name}</h1>
+      </div>
 
-      <div className="mt-4">
+      <div className="mt-2">
         <div className="flex justify-between items-center">
           {/* Team 1 Details */}
           <div className="text-center">
             <img
               src={match.team1_logo}
-              alt={`${match.team1_name} Logo`}
+              alt={`${match.team1_sname} Logo`}
               className="w-10 h-10 mx-auto mb-2"
             />
-            <p className="text-sm">{match.team1_name}</p>
+            <p className="text-sm">{match.team1_sname}</p>
             <p className="text-xl font-bold">
               {match.team1_score + "/" + match.team1_wicket}{" "}
               <span className="text-sm">
@@ -59,10 +61,10 @@ const CompletedMatchHeader = ({ match }) => {
           <div className="text-center">
             <img
               src={match.team2_logo}
-              alt={`${match.team2_name} Logo`}
+              alt={`${match.team2_sname} Logo`}
               className="w-10 h-10 mx-auto mb-2"
             />
-            <p className="text-sm">{match.team2_name}</p>
+            <p className="text-sm">{match.team2_sname}</p>
             <p className="text-xl font-bold">
               {match.team2_score + "/" + match.team2_wicket}{" "}
               <span className="text-sm">

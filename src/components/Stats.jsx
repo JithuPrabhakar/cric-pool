@@ -58,15 +58,15 @@ const Stats = ({ matchId }) => {
           <div key={teamKey} className="mb-4">
             {/* Team Header - Click to Expand */}
             <div
-              className="flex justify-between items-center cursor-pointer bg-gray-200 p-4 rounded-md"
+              className="flex justify-between items-center cursor-pointer bg-gray-200 p-3 rounded-md"
               onClick={() =>
                 setActiveTeam(isActive ? null : teamKey)
               }
             >
-              <h2 className="text-lg font-bold">
+              <h2 className="text-sm font-bold">
                 {team.name}
               </h2>
-              <span className="text-gray-600">
+              <span className="text-gray-600 text-[10px]">
                 {isActive ? "▲" : "▼"}
               </span>
             </div>
