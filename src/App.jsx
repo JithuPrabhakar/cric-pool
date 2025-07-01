@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate,
 } from "react-router-dom"
 import MainLayout from "./pages/MainLayout"
 import LoginLayout from "./pages/LoginLayout"
@@ -28,103 +29,123 @@ import MyMatchesCompletedDetails from "./features/mymatches/MyMatchesCompletedDe
 import CreateTeam from "./features/team/CreateTeam"
 import International from "./features/international/International"
 import Profile from "./components/profile/Profile"
+import { useSelector } from "react-redux"
 
 const App = () => {
+  const user = useSelector((state) => state.auth.user)
   return (
     <Router>
       <Routes>
         {/* Auth Routes */}
-        <Route element={<LoginLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/otp" element={<Otp />} />
-          <Route
-            path="/get-started"
-            element={<GetStarted />}
-          />
-          <Route
-            path="/forgot-password"
-            element={<ForgotPassword />}
-          />
-        </Route>
+        {!user && (
+          <Route element={<LoginLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/register"
+              element={<Register />}
+            />
+            <Route path="/otp" element={<Otp />} />
+            <Route
+              path="/get-started"
+              element={<GetStarted />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPassword />}
+            />
+          </Route>
+        )}
 
         {/* Main Routes */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-
-          <Route
-            path="/predictions"
-            element={<Predictions />}
-          >
-            <Route path="upcoming" element={<Upcoming />} />
-            <Route path="live" element={<Live />} />
+        {user && (
+          <Route element={<MainLayout />}>
             <Route
-              path="completed"
-              element={<Completed />}
+              path="/"
+              element={
+                user ? <Home /> : <Navigate to="/login" />
+              }
+            />
+
+            <Route
+              path="/predictions"
+              element={<Predictions />}
+            >
+              <Route
+                path="upcoming"
+                element={<Upcoming />}
+              />
+              <Route path="live" element={<Live />} />
+              <Route
+                path="completed"
+                element={<Completed />}
+              />
+            </Route>
+
+            <Route
+              path="predictions/upcoming/match/:id"
+              element={<PredictionsUpcomingDetails />}
+            />
+            <Route
+              path="predictions/live/match/:id"
+              element={<PredictionsLiveDetails />}
+            />
+            <Route
+              path="predictions/completed/match/:id"
+              element={<PredictionsCompletedDetails />}
+            />
+
+            <Route
+              path="/my-matches"
+              element={<MyMatches />}
+            >
+              <Route
+                path="upcoming"
+                element={<MyMatchesUpcoming />}
+              />
+              <Route
+                path="live"
+                element={<MyMatchesLive />}
+              />
+              <Route
+                path="completed"
+                element={<MyMatchesCompleted />}
+              />
+            </Route>
+            <Route
+              path="my-matches/upcoming/match/:id"
+              element={<MyMatchesUpcomingDetails />}
+            />
+            <Route
+              path="my-matches/live/match/:id"
+              element={<MyMatchesLiveDetails />}
+            />
+            <Route
+              path="my-matches/completed/match/:id"
+              element={<MyMatchesCompletedDetails />}
+            />
+
+            <Route
+              path="/international-matches"
+              element={<International />}
+            />
+
+            <Route
+              path="/create-team/:id"
+              element={<CreateTeam />}
+            />
+
+            <Route path="/profile" element={<Profile />} />
+
+            <Route
+              path="*"
+              element={
+                <div className="text-center mt-5">
+                  <h1>404 - Page Not Found</h1>
+                </div>
+              }
             />
           </Route>
-
-          <Route
-            path="predictions/upcoming/match/:id"
-            element={<PredictionsUpcomingDetails />}
-          />
-          <Route
-            path="predictions/live/match/:id"
-            element={<PredictionsLiveDetails />}
-          />
-          <Route
-            path="predictions/completed/match/:id"
-            element={<PredictionsCompletedDetails />}
-          />
-
-          <Route path="/my-matches" element={<MyMatches />}>
-            <Route
-              path="upcoming"
-              element={<MyMatchesUpcoming />}
-            />
-            <Route
-              path="live"
-              element={<MyMatchesLive />}
-            />
-            <Route
-              path="completed"
-              element={<MyMatchesCompleted />}
-            />
-          </Route>
-          <Route
-            path="my-matches/upcoming/match/:id"
-            element={<MyMatchesUpcomingDetails />}
-          />
-          <Route
-            path="my-matches/live/match/:id"
-            element={<MyMatchesLiveDetails />}
-          />
-          <Route
-            path="my-matches/completed/match/:id"
-            element={<MyMatchesCompletedDetails />}
-          />
-
-          <Route
-            path="/international-matches"
-            element={<International />}
-          />
-
-          <Route
-            path="/create-team/:id"
-            element={<CreateTeam />}
-          />
-
-          <Route path="/profile" element={<Profile />} />
-
-          <Route
-            path="*"
-            element={
-              <div className="text-center mt-5">
-                <h1>404 - Page Not Found</h1>
-              </div>
-            }
-          />
-        </Route>
+        )}
       </Routes>
     </Router>
   )
