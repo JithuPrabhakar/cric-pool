@@ -85,14 +85,14 @@ const Commentary = ({ matchId, team1, team2 }) => {
     if (!teamData.length) return null
 
     return (
-      <div className="py-2">
+      <div className="py-2 px-4">
         <div
-          className="bg-gray-200 py-2 px-4 cursor-pointer flex justify-between items-center rounded-md"
+          className="flex justify-between items-center cursor-pointer bg-gray-200 p-3 rounded-md"
           onClick={() =>
             setActiveTeam(activeTeam === key ? null : key)
           }
         >
-          <h2 className="text-md font-bold">{title}</h2>
+          <h2 className="text-sm font-bold">{title}</h2>
           <span className="text-gray-600 text-[10px]">
             {activeTeam === key ? "▲" : "▼"}
           </span>

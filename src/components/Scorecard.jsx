@@ -92,23 +92,21 @@ const Scorecard = ({ matchId, team1, team2 }) => {
   ) => (
     <div className="bg-gray-100 rounded-md overflow-hidden">
       <div
-        className="flex justify-between items-center px-4 py-3 bg-muted text-white cursor-pointer"
+        className="flex justify-between items-center p-3 bg-gray-200 cursor-pointer"
         onClick={() =>
           setActiveInning(
             activeInning === type ? null : type
           )
         }
       >
-        <h3 className="font-semibold text-lg capitalize">
+        <h3 className="font-semibold text-sm capitalize">
           {type === "first"
             ? "First Innings"
             : "Second Innings"}
         </h3>
-        {activeInning === type ? (
-          <IoIosArrowUp className="text-xl" />
-        ) : (
-          <IoIosArrowDown className="text-xl" />
-        )}
+        <span className="text-gray-600 text-[10px]">
+          {activeInning === type ? "▲" : "▼"}
+        </span>
       </div>
 
       {activeInning === type && (
