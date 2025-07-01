@@ -30,12 +30,14 @@ const Leaderboard = ({ matchId }) => {
     (user) => user.user_id !== appUserId
   )
 
+  console.log("Leaderboard Data:", leaderboard)
+
   return (
     <div className="p-4 font-sans">
       {/* App User Section */}
       {appUser && (
         <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
-          <div>
+          <div className="flex items-center space-x-2">
             <img
               src={appUser.user_logo}
               alt={appUser.user_name}
@@ -60,7 +62,12 @@ const Leaderboard = ({ matchId }) => {
             key={player.fantasy_team_id || index}
             className="flex justify-between items-center p-2 border-b"
           >
-            <div>
+            <div className="flex items-center space-x-2">
+              <img
+                src={player.user_logo}
+                alt={player.user_name}
+                className="w-10 h-10 rounded-full object-cover border"
+              />
               <p className="font-medium text-gray-700">
                 {player.user_name || "Unnamed"} (T1)
               </p>
