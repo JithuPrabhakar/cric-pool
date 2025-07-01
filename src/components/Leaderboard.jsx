@@ -30,8 +30,6 @@ const Leaderboard = ({ matchId }) => {
     (user) => user.user_id !== appUserId
   )
 
-  console.log("Leaderboard Data:", leaderboard)
-
   return (
     <div className="p-4 font-sans">
       {/* App User Section */}
@@ -60,7 +58,7 @@ const Leaderboard = ({ matchId }) => {
         {restUsers.map((player, index) => (
           <div
             key={player.fantasy_team_id || index}
-            className="flex justify-between items-center p-2 border-b"
+            className="flex justify-between items-center px-2 py-1 border-b"
           >
             <div className="flex items-center space-x-2">
               <img
