@@ -1,11 +1,21 @@
 import { NavLink } from "react-router-dom"
 import { IoPersonCircle } from "react-icons/io5"
 import { IoNotificationsSharp } from "react-icons/io5"
-
 import background from "../assets/background.png"
 import logo from "../assets/app-logo.jpg"
+import { useEffect, useState } from "react"
 
 const Navbar = () => {
+  const [userImage, setUserImage] = useState("")
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const { image } = JSON.parse(storedUser)
+      setUserImage(image)
+    }
+  }, [])
+
   return (
     <header
       className="fixed top-0 left-0 w-full text-white p-4 z-10 flex items-center justify-between"
@@ -26,7 +36,15 @@ const Navbar = () => {
           <IoNotificationsSharp className="text-xl" />
         </NavLink>
         <NavLink to="/profile">
-          <IoPersonCircle className="text-3xl" />
+          {userImage ? (
+            <img
+              src={userImage || logo}
+              alt="User Avatar"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          ) : (
+            <IoPersonCircle className="text-3xl" />
+          )}
         </NavLink>
       </div>
     </header>

@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react"
 import { useGetWinnerDetailsQuery } from "../features/api/apiSlice"
 
 const Leaderboard = ({ matchId }) => {
+  const [appUserId, setAppUserId] = useState("")
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const { user_id } = JSON.parse(storedUser)
+      setAppUserId(user_id)
+    }
+  }, [])
   const {
     data: leaderboard = [],
     isLoading,
@@ -21,7 +31,6 @@ const Leaderboard = ({ matchId }) => {
     )
   }
 
-  const appUserId = "25648" // <- replace with dynamic ID if needed
   const appUser = leaderboard.find(
     (user) => user.user_id === appUserId
   )

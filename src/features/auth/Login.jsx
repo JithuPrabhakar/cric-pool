@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { useSignInUserMutation } from "../api/apiSlice"
+import { setUser } from "../api/authSlice"
 import FormComponent from "../../components/start/FormComponent"
 import Top from "../../components/start/Top"
 
 const Login = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [signInUser, { isLoading, isError, error }] =
     useSignInUserMutation()
 
@@ -12,15 +15,18 @@ const Login = () => {
     try {
       const result = await signInUser(formData).unwrap()
 
-      if (result) {
-        localStorage.setItem("token", result.token) // Store token if needed
-        localStorage.setItem(
-          "user",
-          JSON.stringify(result.user)
+      const user = result?.[1]
+      if (user?.user_id && user?.name) {
+        dispatch(
+          setUser({
+            user_id: user.user_id,
+            name: user.name,
+            image: user.Image || "",
+          })
         )
-
-        console.log("Login Successful", result)
-        navigate("/")
+        navigate("/") // go to main page after login
+      } else {
+        alert("Invalid response from server")
       }
     } catch (err) {
       console.error(
