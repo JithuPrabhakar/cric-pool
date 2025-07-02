@@ -40,7 +40,7 @@ const App = () => {
           path="/"
           element={
             user ? (
-              <Navigate to="/home" />
+              <Navigate to="/" />
             ) : (
               <Navigate to="/login" />
             )
