@@ -56,9 +56,14 @@ const SelectTeam = memo(
 
     return (
       <div className="p-4 mb-12">
-        <h3 className="mb-2 text-lg font-bold text-center uppercase">
-          Select Players
-        </h3>
+        <div className="flex justify-between px-2 mb-2">
+          <h3 className="text-lg font-bold uppercase">
+            Select Players
+          </h3>
+          <p className="text-sm">
+            {selectedPlayers.length} out of 11 selected
+          </p>
+        </div>
         <div className="grid grid-cols-2 gap-4">
           {[
             { teamKey: "team1", data: team1Squad },
