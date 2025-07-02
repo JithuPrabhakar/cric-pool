@@ -52,6 +52,10 @@ const App = () => {
           <Route element={<LoginLayout />}>
             <Route path="/login" element={<Login />} />
             <Route
+              path="*"
+              element={<Navigate to="/login" />}
+            />
+            <Route
               path="/register"
               element={<Register />}
             />
@@ -70,7 +74,7 @@ const App = () => {
         {/* Main Routes */}
         {user && (
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
 
             <Route
               path="/predictions"

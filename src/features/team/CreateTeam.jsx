@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import MyTeam from "./MyTeam"
 import { useGetMatchDetailsQuery } from "../api/apiSlice"
+import { useCreateFantasyTeamMutation } from "../api/apiSlice"
 import CreateTeamHeader from "../../components/team/CreateTeamHeader"
 import SelectCaptains from "../../components/team/SelectCaptains"
 import SelectTeam from "../../components/team/SelectTeam"
@@ -12,13 +13,24 @@ const CreateTeam = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([])
   const [captain, setCaptain] = useState(null)
   const [viceCaptain, setViceCaptain] = useState(null)
+  const [appUserId, setAppUserId] = useState("")
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const { user_id } = JSON.parse(storedUser)
+      setAppUserId(user_id)
+    }
+  }, [])
 
   const {
     data: match,
     isLoading: isL1,
     isError: isE1,
   } = useGetMatchDetailsQuery(Number(id))
+
+  const [createFantasyTeam] = useCreateFantasyTeamMutation()
 
   const nextStep = () => setCurrentStep((prev) => prev + 1)
 
@@ -27,11 +39,11 @@ const CreateTeam = () => {
 
     const newTeam = {
       match_id: id,
-      user_id: 1, // Replace with actual user ID
+      user_id: appUserId,
       players: selectedPlayers.map((player) => ({
         player_id: player.player_id,
-        name: player.name,
-        position: player.position,
+        name: player.playe_name,
+        player_image: player.player_image,
         isCaptain: player.player_id === captain.player_id,
         isViceCaptain:
           player.player_id === viceCaptain.player_id,
@@ -39,7 +51,7 @@ const CreateTeam = () => {
     }
 
     try {
-      await addUserTeam({ user_id: 1, newTeam }).unwrap()
+      await createFantasyTeam(newTeam).unwrap()
       console.log("Team saved successfully!")
       navigate(`/my-matches/upcoming/match/${id}`)
     } catch (error) {
