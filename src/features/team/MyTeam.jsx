@@ -12,15 +12,24 @@ const MyTeam = ({ matchId }) => {
     }
   }, [])
 
+  console.log("Match ID:", matchId)
+  console.log("App User ID:", appUserId)
+
+  const skipQuery = !appUserId || !matchId
+
   const {
     data: userTeam,
     isLoading,
     isError,
-  } = useGetMyFantasySquadQuery({
-    id: matchId,
-    user_id: appUserId,
-    team_id: 12,
-  })
+  } = useGetMyFantasySquadQuery(
+    {
+      id: matchId,
+      player_id: appUserId,
+    },
+    { skip: skipQuery }
+  )
+
+  console.log("User Team Data:", userTeam)
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading team details.</p>
@@ -30,28 +39,29 @@ const MyTeam = ({ matchId }) => {
     <div className="p-4">
       <h3 className="mb-4 text-lg font-bold">My Squad</h3>
       <ul>
-        {userTeam.players.map((player) => (
+        {userTeam.lstPlayers.map((player) => (
           <li
             key={player.player_id}
             className={`p-3 flex items-center justify-between mb-2 border rounded-lg ${
-              player.isCaptain
+              player.captain_status === "1"
                 ? "bg-green-200"
-                : player.isViceCaptain
+                : player.vice_captain_status === "1"
                 ? "bg-yellow-200"
                 : ""
             }`}
           >
             <div>
               <div className="text-sm font-bold">
-                {player.name}
+                {player.player_name}
               </div>
               <div className="text-xs text-gray-500">
                 {player.position}
               </div>
             </div>
             <div className="flex gap-4">
-              {player.isCaptain && "Captain"}
-              {player.isViceCaptain && "Vice Captain"}
+              {player.captain_status === "1" && "Captain"}
+              {player.vice_captain_status === "1" &&
+                "Vice Captain"}
             </div>
           </li>
         ))}
