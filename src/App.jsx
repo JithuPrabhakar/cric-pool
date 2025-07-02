@@ -52,6 +52,10 @@ const App = () => {
           <Route element={<LoginLayout />}>
             <Route path="/login" element={<Login />} />
             <Route
+              path="*"
+              element={<Navigate to="/login" />}
+            />
+            <Route
               path="/register"
               element={<Register />}
             />

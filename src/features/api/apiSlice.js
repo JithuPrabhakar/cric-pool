@@ -115,6 +115,34 @@ export const apiSlice = createApi({
         { type: "Predictions", id },
       ],
     }),
+    createFantasyTeam: builder.mutation({
+      query: (teamData) => ({
+        url: "APIFantasy/CreateFantasyTeam",
+        method: "POST",
+        body: teamData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+    getFantasyTeamPlayers: builder.query({
+      query: ({ id, team_id }) =>
+        `APIFantasy/FantasyTeamPlayers?id=${id}&team_id=${team_id}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getFantasyTeamPlayerPoints: builder.query({
+      query: ({ id, player_id }) =>
+        `APIFantasy/FantasyTeamPlayerPoints?id=${id}&player_id=${player_id}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyFantasySquad: builder.query({
+      query: ({ id, player_id }) =>
+        `APIFantasy/MyFantasySquad?id=${id}&team_id=${team_id}&user_id=${player_id}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
 
     // ==========================
     // PROFILE SECTION
@@ -165,6 +193,10 @@ export const {
   useGetPredictionMatchDetailsQuery,
   useGetPrizeDetailsQuery,
   useGetWinnerDetailsQuery,
+  useCreateFantasyTeamMutation,
+  useGetFantasyTeamPlayersQuery,
+  useGetFantasyTeamPlayerPointsQuery,
+  useGetMyFantasySquadQuery,
 
   // Profile
   useSignUpUserMutation,

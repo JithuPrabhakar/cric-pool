@@ -11,6 +11,7 @@ const Leaderboard = ({ matchId }) => {
       setAppUserId(user_id)
     }
   }, [])
+
   const {
     data: leaderboard = [],
     isLoading,
