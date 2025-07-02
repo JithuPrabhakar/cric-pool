@@ -70,7 +70,7 @@ const App = () => {
         {/* Main Routes */}
         {user && (
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
 
             <Route
               path="/predictions"
