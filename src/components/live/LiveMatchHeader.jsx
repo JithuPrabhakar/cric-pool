@@ -15,7 +15,7 @@ const LiveMatchHeader = ({ match }) => {
   }
 
   return (
-    <header className="bg-primary text-white p-4">
+    <header className="bg-gradient-to-r from-primary to-secondary text-white p-4">
       <NavLink to={`/predictions/live`}>
         <button className="text-white" onClick={handleBack}>
           <IoArrowBackOutline />

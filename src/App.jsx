@@ -36,6 +36,17 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/"
+          element={
+            user ? (
+              <Navigate to="/home" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
         {/* Auth Routes */}
         {!user && (
           <Route element={<LoginLayout />}>
@@ -59,12 +70,7 @@ const App = () => {
         {/* Main Routes */}
         {user && (
           <Route element={<MainLayout />}>
-            <Route
-              path="/"
-              element={
-                user ? <Home /> : <Navigate to="/login" />
-              }
-            />
+            <Route path="/" element={<Home />} />
 
             <Route
               path="/predictions"
