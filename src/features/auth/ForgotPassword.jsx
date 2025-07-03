@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "../../components/start/Button"
 import FormWrapper from "../../components/start/FormWrapper"
 import InputField from "../../components/start/InputField"
@@ -10,16 +10,13 @@ const ForgotPassword = () => {
   const [error, setError] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
 
-  // Mutation for forgot password
   const [forgotPassword, { isLoading }] =
     useForgotPasswordMutation()
 
-  // Handle Input Change
   const handleInputChange = (e) => {
     setUsername(e.target.value)
   }
 
-  // Handle Form Submission
   const handleSubmit = async () => {
     if (!username.trim()) {
       setError("Please enter a valid username.")
@@ -27,28 +24,39 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await forgotPassword({
+      const res = await forgotPassword({
         username,
       }).unwrap()
+      const status = res?.[0]
 
-      if (response?.status === "success") {
+      if (status?.StatusCode === 0) {
         setSuccessMessage(
-          "Password reset link sent successfully. Check your inbox."
+          "Reset link sent successfully. Check your inbox."
         )
-        setError("") // Clear any previous error
+        setError("")
       } else {
         setError(
-          "Failed to send reset link. Please try again."
+          status?.Message || "Failed to send reset link."
         )
+        setSuccessMessage("")
       }
     } catch (err) {
       console.error("Error resetting password:", err)
-      setError(
-        "Failed to send reset link. Please try again."
-      )
-      setSuccessMessage("") // Clear any previous success message
+      setError("Something went wrong. Please try again.")
+      setSuccessMessage("")
     }
   }
+
+  // ✅ Auto-clear messages after 5 seconds
+  useEffect(() => {
+    if (error || successMessage) {
+      const timer = setTimeout(() => {
+        setError("")
+        setSuccessMessage("")
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [error, successMessage])
 
   return (
     <div className="w-full h-screen flex flex-col items-center">
@@ -58,17 +66,16 @@ const ForgotPassword = () => {
           Enter your username to reset your password.
         </p>
 
-        {/* Input Field for Username */}
         <InputField
-          id={"username"}
-          label={"Username"}
-          type={"text"}
-          placeholder={"Enter your username"}
+          id="username"
+          label="Username"
+          type="text"
+          placeholder="Enter your username"
           value={username}
           onChange={handleInputChange}
         />
 
-        {/* Success/Error Messages */}
+        {/* Error/Success messages */}
         {error && (
           <p className="text-red-500 text-sm text-center mb-2">
             {error}
@@ -80,7 +87,6 @@ const ForgotPassword = () => {
           </p>
         )}
 
-        {/* Submit Button */}
         <Button
           onClick={handleSubmit}
           className={`w-full text-white py-2 rounded ${

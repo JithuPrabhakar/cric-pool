@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import Button from "../../components/start/Button"
 import FormWrapper from "../../components/start/FormWrapper"
 import InputField from "../../components/start/InputField"
@@ -11,24 +11,25 @@ import {
 
 const Otp = () => {
   const navigate = useNavigate()
+  const location = useLocation()
 
-  // States for OTP, error, and loading
   const [otp, setOtp] = useState("")
   const [error, setError] = useState("")
-  const [resendCooldown, setResendCooldown] = useState(30) // Cooldown in seconds
+  const [success, setSuccess] = useState("")
+  const [resendCooldown, setResendCooldown] = useState(30)
   const [isResending, setIsResending] = useState(false)
 
-  // Mutations
+  const username = location.state?.username || ""
+  console.log("Username from state:", username)
+
   const [confirmOTP, { isLoading }] =
     useConfirmOTPMutation()
   const [resendOTP] = useResendOTPMutation()
 
-  // Handle OTP Input Change
   const handleInputChange = (e) => {
     setOtp(e.target.value)
   }
 
-  // Handle OTP Submission
   const handleFormSubmit = async () => {
     if (!otp.trim()) {
       setError("Please enter a valid OTP.")
@@ -36,48 +37,50 @@ const Otp = () => {
     }
 
     try {
-      const response = await confirmOTP({
-        username: "jithu", // Replace with dynamic data if needed
+      const res = await confirmOTP({
+        username,
         otp,
       }).unwrap()
+      const status = res?.[0]
 
-      if (response?.status === "success") {
-        console.log("OTP Verified Successfully!")
-        navigate("/username")
+      if (status?.StatusCode === 0) {
+        setSuccess("OTP Verified Successfully!")
+        setError("")
+        setTimeout(() => navigate("/login"), 1000)
       } else {
-        setError("Invalid OTP. Please try again.")
+        setError(status?.Message || "Invalid OTP.")
+        setSuccess("")
       }
     } catch (err) {
       console.error("Error confirming OTP:", err)
-      setError("Failed to confirm OTP. Please try again.")
+      setError("Something went wrong. Please try again.")
+      setSuccess("")
     }
   }
 
-  // Handle Resend OTP
   const handleResendOTP = async () => {
     setIsResending(true)
-
     try {
-      const response = await resendOTP({
-        username: "jithu", // Replace with dynamic data if needed
-      }).unwrap()
+      const res = await resendOTP({ username }).unwrap()
+      const status = res?.[0]
 
-      if (response?.status === "success") {
-        console.log("OTP resent successfully!")
-        setError("OTP has been resent. Check your inbox.")
+      if (status?.StatusCode === 0) {
+        setSuccess("OTP has been resent successfully.")
+        setError("")
         startCooldownTimer()
       } else {
-        setError("Failed to resend OTP. Please try again.")
+        setError(status?.Message || "Failed to resend OTP.")
+        setSuccess("")
       }
     } catch (err) {
       console.error("Error resending OTP:", err)
       setError("Failed to resend OTP. Please try again.")
+      setSuccess("")
     } finally {
       setIsResending(false)
     }
   }
 
-  // Start cooldown timer for resend OTP
   const startCooldownTimer = () => {
     setResendCooldown(30)
     const interval = setInterval(() => {
@@ -91,6 +94,17 @@ const Otp = () => {
     }, 1000)
   }
 
+  // ✅ Auto-clear error/success messages
+  useEffect(() => {
+    if (error || success) {
+      const timer = setTimeout(() => {
+        setError("")
+        setSuccess("")
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [error, success])
+
   return (
     <div className="w-full h-screen flex flex-col items-center">
       <Top title={"One More Step"} />
@@ -100,7 +114,6 @@ const Otp = () => {
           number/e-mail.
         </p>
 
-        {/* OTP Input Field */}
         <InputField
           id={"otp"}
           label={"Enter your OTP"}
@@ -115,8 +128,12 @@ const Otp = () => {
             {error}
           </p>
         )}
+        {success && (
+          <p className="text-green-500 text-sm text-center mb-2">
+            {success}
+          </p>
+        )}
 
-        {/* Submit OTP Button */}
         <Button
           onClick={handleFormSubmit}
           className={`w-full text-white py-2 rounded ${
@@ -129,7 +146,6 @@ const Otp = () => {
           {isLoading ? "Verifying..." : "Submit"}
         </Button>
 
-        {/* Resend OTP Button */}
         <div className="mt-4 text-center">
           {resendCooldown > 0 ? (
             <p className="text-sm text-muted">
@@ -139,8 +155,9 @@ const Otp = () => {
             <Button
               onClick={handleResendOTP}
               className={`text-blue text-sm ${
-                isResending &&
-                "opacity-50 cursor-not-allowed"
+                isResending
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
               }`}
               disabled={isResending}
             >
