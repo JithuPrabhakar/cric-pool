@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#1d012d", // Dark Blue
-        secondary: "#194276", // Light Blue
+        primary: "#0c486f", // Dark Blue
+        secondary: "#031b2e", // Light Blue
         accent: "#27AE60", // Teal/Greenish Blue
         muted: "#6b6b6b", // Light Gray
       },

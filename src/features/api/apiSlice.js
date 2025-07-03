@@ -3,11 +3,13 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react"
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL
+const baseUrl = 'https://cricketwar.com/'
 
 export const apiSlice = createApi({
   reducerPath: "api",
+
   baseQuery: fetchBaseQuery({ baseUrl }),
+
   tagTypes: ["Matches", "Predictions", "Users", "Teams"],
   endpoints: (builder) => ({
     // ==========================
