@@ -1,7 +1,7 @@
 import InputField from "./InputField"
 import Button from "./Button"
 import FormWrapper from "./FormWrapper"
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useState } from "react"
 
 const FormComponent = ({
@@ -11,8 +11,10 @@ const FormComponent = ({
   alternateText,
   redirectLink,
   onSubmit,
+  errors = {}, // ✅ NEW: errors prop from parent
 }) => {
   const [formData, setFormData] = useState({
+    name: "",
     username: "",
     password: "",
     confirmPassword: "",
@@ -28,21 +30,7 @@ const FormComponent = ({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    if (!formData.username || !formData.password) {
-      alert("Please fill in all required fields.")
-      return
-    }
-
-    if (
-      formType === "register" &&
-      formData.password !== formData.confirmPassword
-    ) {
-      alert("Passwords do not match.")
-      return
-    }
-
-    onSubmit(formData) // Pass data to parent component for API call
+    onSubmit(formData) // Let parent validate and handle errors
   }
 
   const isLogin = formType === "login"
@@ -55,50 +43,78 @@ const FormComponent = ({
 
       {/* Full Name Input Field */}
       {!isLogin && (
-        <InputField
-          id="name"
-          label="Full Name"
-          type="text"
-          placeholder="Enter your full name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <>
+          <InputField
+            id="name"
+            label="Full Name"
+            type="text"
+            placeholder="Enter your full name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {errors.name && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.name}
+            </p>
+          )}
+        </>
       )}
 
       {/* Username Input Field */}
-      <InputField
-        id="username"
-        label="Username"
-        type="text"
-        placeholder="Enter your username"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
+      <>
+        <InputField
+          id="username"
+          label="Phone number"
+          type="number"
+          placeholder="Enter your phone number"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+        {errors.username && (
+          <p className="text-red-500 text-xs mt-1">
+            {errors.username}
+          </p>
+        )}
+      </>
 
       {/* Password Input Field */}
-      <InputField
-        id="password"
-        label="Password"
-        type="password"
-        placeholder="Enter your password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+      <>
+        <InputField
+          id="password"
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+        {errors.password && (
+          <p className="text-red-500 text-xs mt-1">
+            {errors.password}
+          </p>
+        )}
+      </>
 
       {/* Confirm Password Input (Only for Register) */}
       {!isLogin && (
-        <InputField
-          id="confirm-password"
-          label="Confirm your Password"
-          type="password"
-          placeholder="Confirm your password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        <>
+          <InputField
+            id="confirm-password"
+            label="Confirm your Password"
+            type="password"
+            placeholder="Confirm your password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.confirmPassword}
+            </p>
+          )}
+        </>
       )}
 
       {/* Submit Button */}
