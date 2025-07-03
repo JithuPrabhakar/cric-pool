@@ -73,21 +73,21 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/APIProfile": {
-          target: "http://test.cricketwar.com",
+          target: "https://cricketwar.com/",
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
             path.replace(/^\/APIProfile/, "/APIProfile"),
         },
         "/APIMatches": {
-          target: "http://test.cricketwar.com",
+          target: "https://cricketwar.com/",
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
             path.replace(/^\/APIMatches/, "/APIMatches"),
         },
         "/APIFantasy": {
-          target: "http://test.cricketwar.com",
+          target: "https://cricketwar.com/",
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>

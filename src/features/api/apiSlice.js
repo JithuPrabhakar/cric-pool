@@ -139,7 +139,7 @@ export const apiSlice = createApi({
     }),
     getMyFantasySquad: builder.query({
       query: ({ id, player_id }) =>
-        `APIFantasy/MyFantasySquad?id=${id}&team_id=${team_id}&user_id=${player_id}`,
+        `APIFantasy/MyFantasySquad?id=${id}&team_id=0&user_id=${player_id}`,
       transformResponse: (res) => res[1] || [],
       providesTags: ["Predictions"],
     }),
