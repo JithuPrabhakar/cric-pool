@@ -12,15 +12,19 @@ const MyTeam = ({ matchId }) => {
     }
   }, [])
 
+  const skipQuery = !appUserId || !matchId
+
   const {
     data: userTeam,
     isLoading,
     isError,
-  } = useGetMyFantasySquadQuery({
-    id: matchId,
-    user_id: appUserId,
-    team_id: 12,
-  })
+  } = useGetMyFantasySquadQuery(
+    {
+      id: matchId,
+      player_id: appUserId,
+    },
+    { skip: skipQuery }
+  )
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading team details.</p>
@@ -28,30 +32,40 @@ const MyTeam = ({ matchId }) => {
 
   return (
     <div className="p-4">
-      <h3 className="mb-4 text-lg font-bold">My Squad</h3>
+      <h3 className="mb-4 text-md text-center font-bold">
+        Fantasy Squad
+      </h3>
       <ul>
-        {userTeam.players.map((player) => (
+        {userTeam.lstPlayers.map((player) => (
           <li
             key={player.player_id}
-            className={`p-3 flex items-center justify-between mb-2 border rounded-lg ${
-              player.isCaptain
+            className={`p-1 flex items-center justify-between mb-1 rounded-lg ${
+              player.captain_status === "1"
                 ? "bg-green-200"
-                : player.isViceCaptain
+                : player.vice_captain_status === "1"
                 ? "bg-yellow-200"
                 : ""
             }`}
           >
-            <div>
-              <div className="text-sm font-bold">
-                {player.name}
-              </div>
-              <div className="text-xs text-gray-500">
-                {player.position}
+            <div className="flex items-center gap-3">
+              <img
+                src={player.player_logo}
+                alt={player.player_name}
+                className="w-8 h-8 rounded-full object-cover border"
+              />
+              <div>
+                <p className="text-sm font-bold">
+                  {player.player_name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {player.point}
+                </p>
               </div>
             </div>
             <div className="flex gap-4">
-              {player.isCaptain && "Captain"}
-              {player.isViceCaptain && "Vice Captain"}
+              {player.captain_status === "1" && "Captain"}
+              {player.vice_captain_status === "1" &&
+                "Vice Captain"}
             </div>
           </li>
         ))}

@@ -42,8 +42,6 @@ const CreateTeam = () => {
       user_id: appUserId,
       players: selectedPlayers.map((player) => ({
         player_id: player.player_id,
-        name: player.playe_name,
-        player_image: player.player_image,
         isCaptain: player.player_id === captain.player_id,
         isViceCaptain:
           player.player_id === viceCaptain.player_id,
