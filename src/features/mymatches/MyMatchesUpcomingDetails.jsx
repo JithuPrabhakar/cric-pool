@@ -1,12 +1,27 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useGetMatchDetailsQuery } from "../api/apiSlice"
-import { useGetPrizeDetailsQuery } from "../api/apiSlice"
+import {
+  useGetMatchDetailsQuery,
+  useGetPrizeDetailsQuery,
+  useGetMyFantasySquadQuery,
+} from "../api/apiSlice"
 import UpcomingHeader from "../../components/upcoming/UpcomingHeader"
 import UpcomingTabs from "../../components/upcoming/UpcomingTabs"
 
 const MyMatchesUpcomingDetails = () => {
   const { id } = useParams()
+  const [isEdit, setIsEdit] = useState(false)
+  const [appUserId, setAppUserId] = useState(null)
+
+  // Get logged-in user
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const { user_id } = JSON.parse(storedUser)
+      setAppUserId(user_id)
+    }
+  }, [])
+
   const {
     data: match,
     isLoading,
@@ -17,10 +32,20 @@ const MyMatchesUpcomingDetails = () => {
     Number(id)
   )
 
-  if (isLoading) return <p>Loading...</p>
-  if (isError) return <p>Error loading match details.</p>
+  const { data: userTeam, isLoading: isTeamLoading } =
+    useGetMyFantasySquadQuery(
+      { id: Number(id), player_id: appUserId },
+      { skip: !appUserId || !id }
+    )
 
-  const isEdit = false
+  useEffect(() => {
+    if (userTeam && userTeam.lstPlayers?.length > 0) {
+      setIsEdit(true)
+    }
+  }, [userTeam])
+
+  if (isLoading || isTeamLoading) return <p>Loading...</p>
+  if (isError) return <p>Error loading match details.</p>
 
   return (
     <div>
@@ -30,7 +55,12 @@ const MyMatchesUpcomingDetails = () => {
         isEdit={isEdit}
         matchId={id}
       />
-      <UpcomingTabs prizes={prizes} />
+      <UpcomingTabs
+        prizes={prizes}
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
+        matchId={id}
+      />
     </div>
   )
 }

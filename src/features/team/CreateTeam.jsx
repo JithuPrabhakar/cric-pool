@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import MyTeam from "./MyTeam"
-import { useGetMatchDetailsQuery } from "../api/apiSlice"
-import { useCreateFantasyTeamMutation } from "../api/apiSlice"
+import {
+  useGetMatchDetailsQuery,
+  useCreateFantasyTeamMutation,
+  useGetMyFantasySquadQuery,
+} from "../api/apiSlice"
 import CreateTeamHeader from "../../components/team/CreateTeamHeader"
 import SelectCaptains from "../../components/team/SelectCaptains"
 import SelectTeam from "../../components/team/SelectTeam"
@@ -24,11 +27,39 @@ const CreateTeam = () => {
     }
   }, [])
 
+  const skipQuery = !appUserId || !id
+
+  // Match Details
   const {
     data: match,
     isLoading: isL1,
     isError: isE1,
   } = useGetMatchDetailsQuery(Number(id))
+
+  // Check if user already has a team
+  const { data: existingTeam, isLoading: isL2 } =
+    useGetMyFantasySquadQuery(
+      { id, userid: appUserId },
+      { skip: skipQuery }
+    )
+
+  // Initialize team if user has already created one
+  useEffect(() => {
+    if (existingTeam && existingTeam.lstPlayers) {
+      const players = existingTeam.lstPlayers
+      setSelectedPlayers(players)
+
+      const cap = players.find(
+        (p) => p.captain_status === "1"
+      )
+      const vcap = players.find(
+        (p) => p.vice_captain_status === "1"
+      )
+
+      setCaptain(cap || null)
+      setViceCaptain(vcap || null)
+    }
+  }, [existingTeam])
 
   const [createFantasyTeam] = useCreateFantasyTeamMutation()
 
@@ -63,8 +94,8 @@ const CreateTeam = () => {
       {currentStep === 1 && match && (
         <SelectTeam
           id={id}
-          team1_id={match[0].team1_id}
-          team2_id={match[0].team2_id}
+          team1_id={match[0]?.team1_id}
+          team2_id={match[0]?.team2_id}
           selectedPlayers={selectedPlayers}
           setSelectedPlayers={setSelectedPlayers}
           nextStep={nextStep}
