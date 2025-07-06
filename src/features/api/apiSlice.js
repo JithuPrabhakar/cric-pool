@@ -3,13 +3,11 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react"
 
-const baseUrl = 'https://cricketwar.com/'
+const baseUrl = "https://cricketwar.com/"
 
 export const apiSlice = createApi({
   reducerPath: "api",
-
   baseQuery: fetchBaseQuery({ baseUrl }),
-
   tagTypes: ["Matches", "Predictions", "Users", "Teams"],
   endpoints: (builder) => ({
     // ==========================
@@ -39,8 +37,8 @@ export const apiSlice = createApi({
       ],
     }),
     getSquadList: builder.query({
-      query: ({ id, teamId }) =>
-        `APIMatches/GetMatchSquadList?id=${id}&team_id=${teamId}`,
+      query: ({ id, teamId, userId }) =>
+        `APIMatches/GetMatchSquadList?id=${id}&team_id=${teamId}&user_id=${userId}`,
       transformResponse: (res) => res[1] || [],
       providesTags: ["Matches"],
     }),
@@ -73,6 +71,28 @@ export const apiSlice = createApi({
         `APIMatches/GetMatchMVPDetails?id=${id}`,
       transformResponse: (res) => res[1] || [],
       providesTags: ["Matches"],
+    }),
+
+    // ==========================
+    // USER'S MY MATCHES SECTION
+    // ==========================
+    getMyUpcomingMatches: builder.query({
+      query: ({ userid, page = 1 }) =>
+        `APIFantasy/ListofMyUpcomingMatches?userid=${userid}&page=${page}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyLiveMatches: builder.query({
+      query: ({ userid, page = 1 }) =>
+        `APIFantasy/ListofMyLiveMatches?userid=${userid}&page=${page}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyPastMatches: builder.query({
+      query: ({ userid, page = 1 }) =>
+        `APIFantasy/ListofMyPastMatches?userid=${userid}&page=${page}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
     }),
 
     // ==========================
@@ -138,8 +158,26 @@ export const apiSlice = createApi({
       providesTags: ["Predictions"],
     }),
     getMyFantasySquad: builder.query({
-      query: ({ id, player_id }) =>
-        `APIFantasy/MyFantasySquad?id=${id}&team_id=0&user_id=${player_id}`,
+      query: ({ id, userid }) =>
+        `APIFantasy/MyFantasySquad?id=${id}&team_id=0&user_id=${userid}`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyUpcomingMatches: builder.query({
+      query: ({ userid }) =>
+        `APIFantasy/ListofMyUpcomingMatches?userid=${userid}&page=1`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyLiveMatches: builder.query({
+      query: ({ userid }) =>
+        `APIFantasy/ListofMyLiveMatches?userid=${userid}&page=1`,
+      transformResponse: (res) => res[1] || [],
+      providesTags: ["Predictions"],
+    }),
+    getMyPastMatches: builder.query({
+      query: ({ userid }) =>
+        `APIFantasy/ListofMyPastMatches?userid=${userid}&page=1`,
       transformResponse: (res) => res[1] || [],
       providesTags: ["Predictions"],
     }),
@@ -185,6 +223,11 @@ export const {
   useGetPartnershipQuery,
   useGetBallByBallDetailsQuery,
   useGetMVPDetailsQuery,
+
+  //User My matches
+  useGetMyUpcomingMatchesQuery,
+  useGetMyLiveMatchesQuery,
+  useGetMyPastMatchesQuery,
 
   // Predictions
   useGetPredictionUpcomingMatchesQuery,
