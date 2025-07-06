@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { skipToken } from "@reduxjs/toolkit/query"
 import { useGetMyFantasySquadQuery } from "../api/apiSlice"
 
 const MyTeam = ({ matchId, setIsEdit, isEdit }) => {
@@ -11,30 +12,27 @@ const MyTeam = ({ matchId, setIsEdit, isEdit }) => {
       setAppUserId(user_id)
     }
   }, [])
-  console.log(appUserId)
-
-  const skipQuery = !appUserId || !matchId
 
   const {
     data: userTeam,
     isLoading,
     isError,
   } = useGetMyFantasySquadQuery(
-    {
-      id: matchId,
-      userid: appUserId,
-    },
-    { skip: skipQuery }
+    appUserId && matchId
+      ? { id: matchId, userid: appUserId }
+      : skipToken
   )
-
-  console.log(userTeam)
 
   // Team exists – update state
   useEffect(() => {
-    if (userTeam?.lstPlayers?.length > 0) {
+    if (
+      userTeam?.lstPlayers?.length > 0 &&
+      !isEdit &&
+      setIsEdit
+    ) {
       setIsEdit(true)
     }
-  }, [userTeam])
+  }, [userTeam, isEdit, setIsEdit])
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading team details.</p>
