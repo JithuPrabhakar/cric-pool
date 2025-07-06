@@ -14,7 +14,7 @@ const CreateTeamHeader = memo(({ id }) => {
   return (
     <div className="p-4 bg-primary text-center">
       <h2 className="text-lg font-bold text-white">
-        Create Your Team
+        Create/Edit Your Team
       </h2>
       <div className="flex justify-between items-center text-white">
         <div className="flex flex-col items-center">

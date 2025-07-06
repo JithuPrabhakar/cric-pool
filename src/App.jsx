@@ -143,6 +143,10 @@ const App = () => {
               path="/create-team/:id"
               element={<CreateTeam />}
             />
+            <Route
+              path="/edit-team/:id"
+              element={<CreateTeam />}
+            />
 
             <Route path="/profile" element={<Profile />} />
 
