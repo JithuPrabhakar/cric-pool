@@ -39,7 +39,7 @@ const UpcomingHeader = ({
             Total Prize Pool
           </p>
           <p className="text-lg font-bold text-white">
-            {prizePool || 0}
+            {prizePool || 50000}
           </p>
         </div>
         <div className="text-right text-white">
@@ -47,7 +47,7 @@ const UpcomingHeader = ({
             Total Spots
           </p>
           <p className="text-sm mt-1 text-white">
-            {spots || 0} Spots
+            {spots || 10000} Spots
           </p>
         </div>
       </div>
