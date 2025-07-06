@@ -5,13 +5,14 @@ import {
 } from "react-router-dom"
 import { IoArrowBackOutline } from "react-icons/io5"
 
-const UpcomingHeader = ({ prizePool, spots, matchId }) => {
+const UpcomingHeader = ({
+  prizePool,
+  spots,
+  matchId,
+  isEdit,
+}) => {
   const navigate = useNavigate()
   const location = useLocation()
-
-  // Check if the current path is from "my-matches" or "predictions"
-  const isFromMyMatches =
-    location.pathname.includes("my-matches")
 
   const handleBack = () => {
     if (location.key !== "default") {
@@ -38,15 +39,15 @@ const UpcomingHeader = ({ prizePool, spots, matchId }) => {
             Total Prize Pool
           </p>
           <p className="text-lg font-bold text-white">
-            {prizePool} 50,000
+            {prizePool || 0}
           </p>
         </div>
         <div className="text-right text-white">
           <p className="text-sm font-medium text-white">
             Total Spots
           </p>
-          <p className="text-sm text-right mt-1 text-white">
-            {spots} 10,000 Spots
+          <p className="text-sm mt-1 text-white">
+            {spots || 0} Spots
           </p>
         </div>
       </div>
@@ -54,14 +55,14 @@ const UpcomingHeader = ({ prizePool, spots, matchId }) => {
       {/* Dynamic Join/Edit Team Button */}
       <NavLink
         to={
-          isFromMyMatches
+          isEdit
             ? `/edit-team/${matchId}`
             : `/create-team/${matchId}`
         }
         className="block w-full mt-4"
       >
         <button className="w-full bg-accent text-white py-2 rounded hover:bg-secondary-dark">
-          {isFromMyMatches ? "EDIT TEAM" : "JOIN MATCH"}
+          {isEdit ? "EDIT TEAM" : "JOIN MATCH"}
         </button>
       </NavLink>
     </div>

@@ -1,16 +1,31 @@
+import { useEffect, useState } from "react"
 import MatchCard from "../../components/MatchCard"
-import { useGetUpcomingMatchesQuery } from "../api/apiSlice"
+import { useGetMyUpcomingMatchesQuery } from "../api/apiSlice"
 import { Link } from "react-router-dom"
 
 const MyMatchesUpcoming = () => {
+  const [appUserId, setAppUserId] = useState("")
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const { user_id } = JSON.parse(storedUser)
+      setAppUserId(user_id)
+    }
+  }, [])
+
   const {
     data: matches,
     isLoading,
     isError,
-  } = useGetUpcomingMatchesQuery()
+  } = useGetMyUpcomingMatchesQuery({
+    userid: appUserId,
+  })
 
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error loading matches.</p>
+  if (matches.length === 0)
+    return <p>You haven't joined any matches yet..!!</p>
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
