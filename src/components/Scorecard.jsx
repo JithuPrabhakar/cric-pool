@@ -3,10 +3,6 @@ import {
   useGetBattingFigureQuery,
   useGetBowlingFigureQuery,
 } from "../features/api/apiSlice"
-import {
-  IoIosArrowDown,
-  IoIosArrowUp,
-} from "react-icons/io"
 
 const Scorecard = ({ matchId, team1, team2 }) => {
   const [activeInning, setActiveInning] = useState("first")
@@ -191,15 +187,15 @@ const Scorecard = ({ matchId, team1, team2 }) => {
     <div className="space-y-6 p-4">
       {renderInnings(
         "first",
-        team1Batting,
-        team2Bowling,
-        team1Bowling[0]?.team_name
-      )}
-      {renderInnings(
-        "second",
         team2Batting,
         team1Bowling,
         team2Bowling[0]?.team_name
+      )}
+      {renderInnings(
+        "second",
+        team1Batting,
+        team2Bowling,
+        team1Bowling[0]?.team_name
       )}
     </div>
   )
