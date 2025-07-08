@@ -30,6 +30,8 @@ import CreateTeam from "./features/team/CreateTeam"
 import International from "./features/international/International"
 import Profile from "./components/profile/Profile"
 import { useSelector } from "react-redux"
+import User from "./components/profile/User"
+import Player from "./components/profile/Player"
 
 const App = () => {
   const user = useSelector((state) => state.auth.user)
@@ -149,6 +151,14 @@ const App = () => {
             />
 
             <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/player-detail/:id"
+              element={<Player />}
+            />
+            <Route
+              path="/user-detail/:id"
+              element={<User />}
+            />
 
             <Route
               path="*"

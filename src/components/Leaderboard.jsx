@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useGetWinnerDetailsQuery } from "../features/api/apiSlice"
+import { Link } from "react-router-dom"
 
 const Leaderboard = ({ matchId }) => {
   const [appUserId, setAppUserId] = useState("")
@@ -44,48 +45,54 @@ const Leaderboard = ({ matchId }) => {
     <div className="p-4 font-sans">
       {/* App User Section */}
       {appUser && (
-        <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
-          <div className="flex items-center space-x-2">
-            <img
-              src={appUser.user_logo}
-              alt={appUser.user_name}
-              className="w-10 h-10 rounded-full object-cover border"
-            />
-            <p className="font-medium text-green-800">
-              {appUser.user_name} (T1)
-            </p>
+        <Link to={`/user-detail/${appUser.user_id}`}>
+          <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
+            <div className="flex items-center space-x-2">
+              <img
+                src={appUser.user_logo}
+                alt={appUser.user_name}
+                className="w-10 h-10 rounded-full object-cover border"
+              />
+              <p className="font-medium text-green-800">
+                {appUser.user_name} (T1)
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="font-semibold text-black">
+                {parseFloat(appUser.total_point).toFixed(2)}
+              </p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="font-semibold text-black">
-              {parseFloat(appUser.total_point).toFixed(2)}
-            </p>
-          </div>
-        </div>
+        </Link>
       )}
 
       {/* Leaderboard List */}
       <div className="space-y-2">
         {restUsers.map((player, index) => (
-          <div
+          <Link
             key={player.fantasy_team_id || index}
-            className="flex justify-between items-center px-2 py-1 border-b"
+            to={`/user-detail/${player.user_id}`}
           >
-            <div className="flex items-center space-x-2">
-              <img
-                src={player.user_logo}
-                alt={player.user_name}
-                className="w-10 h-10 rounded-full object-cover border"
-              />
-              <p className="font-medium text-gray-700">
-                {player.user_name || "Unnamed"} (T1)
-              </p>
+            <div className="flex justify-between items-center px-2 py-1 border-b">
+              <div className="flex items-center space-x-2">
+                <img
+                  src={player.user_logo}
+                  alt={player.user_name}
+                  className="w-10 h-10 rounded-full object-cover border"
+                />
+                <p className="font-medium text-gray-700">
+                  {player.user_name || "Unnamed"} (T1)
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="font-semibold text-black">
+                  {parseFloat(player.total_point).toFixed(
+                    2
+                  )}
+                </p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="font-semibold text-black">
-                {parseFloat(player.total_point).toFixed(2)}
-              </p>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
