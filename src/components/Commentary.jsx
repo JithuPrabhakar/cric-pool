@@ -24,10 +24,9 @@ const CommentaryItem = ({ item }) => {
           {item.overs}
         </div>
       </div>
-      <div className="flex-grow text-xs text-gray-800">
+      <div className="flex text-xs text-gray-800 items-center">
         <p>
-          <strong>Bowler:</strong> {item.bowler_name} <br />
-          <strong>To:</strong> {item.striker_name}
+          {item.bowler_name} To {item.striker_name}
           {item.run &&
             ` — ${item.run} run${
               item.run !== "1" ? "s" : ""
@@ -35,7 +34,7 @@ const CommentaryItem = ({ item }) => {
         </p>
         {item.wicket_status === "True" && (
           <div className="text-red-600 font-semibold mt-1">
-            WICKET: {item.striker_name} - {item.wicket_type}
+            {item.striker_name} - {item.wicket_type}
             {item.fielder_name &&
               ` (by ${item.fielder_name})`}
           </div>
