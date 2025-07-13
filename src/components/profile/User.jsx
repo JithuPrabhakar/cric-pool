@@ -14,9 +14,21 @@ const User = () => {
 
   return (
     <div className="p-4">
-      <h3 className="mb-4 text-md text-center font-bold">
-        Fantasy Squad of {userTeam.user_name}
-      </h3>
+      <div className="flex items-center gap-4 mb-4 p-4 rounded-md bg-primary text-white shadow">
+        <img
+          src={userTeam.user_logo}
+          alt={userTeam.user_name}
+          className="w-12 h-12 rounded-full object-cover border border-white"
+        />
+        <div>
+          <h2 className="text-lg font-bold">
+            {userTeam.user_name}
+          </h2>
+          <p className="text-sm">
+            Total Points: {userTeam.total_point}
+          </p>
+        </div>
+      </div>
       <div
         to={`/player-points/${userTeam.matchId}/${userTeam.playerId}`}
       >
