@@ -50,8 +50,8 @@ const MyMatchesUpcomingDetails = () => {
   return (
     <div>
       <UpcomingHeader
-        prizePool={match.prize_pool}
-        spots={match.spots}
+        prizePool={match.total_prize_pool}
+        spots={match.total_spots}
         isEdit={isEdit}
         matchId={id}
       />
