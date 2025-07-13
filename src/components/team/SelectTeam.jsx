@@ -56,14 +56,10 @@ const SelectTeam = memo(
 
     return (
       <div className="p-4 mb-12">
-        <div className="flex justify-between px-2 mb-2">
-          <h3 className="text-lg font-bold uppercase">
-            Select Players
-          </h3>
-          <p className="text-sm">
-            {selectedPlayers.length} out of 11 selected
-          </p>
-        </div>
+        <h3 className="text-center text-lg font-bold uppercase px-2 mb-2">
+          Select Players
+        </h3>
+
         <div className="grid grid-cols-2 gap-4">
           {[
             { teamKey: "team1", data: team1Squad },
@@ -128,7 +124,9 @@ const SelectTeam = memo(
           onClick={nextStep}
           disabled={selectedPlayers.length !== 11}
         >
-          Next
+          {selectedPlayers.length === 11
+            ? "Next"
+            : `${selectedPlayers.length} out of 11 selected`}
         </button>
       </div>
     )

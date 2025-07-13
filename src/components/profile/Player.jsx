@@ -34,18 +34,18 @@ const Player = () => {
 
   return (
     <div className="p-4">
-      {/* Player Header */}
-      <div className="flex items-center gap-4 mb-4">
+      {/* Player Header with Primary Background */}
+      <div className="flex items-center gap-4 mb-4 p-4 rounded-md bg-primary text-white shadow">
         <img
           src={playerInfo.player_logo}
           alt={playerInfo.player_name}
-          className="w-12 h-12 rounded-full object-cover border"
+          className="w-12 h-12 rounded-full object-cover border border-white"
         />
         <div>
           <h2 className="text-lg font-bold">
             {playerInfo.player_name}
           </h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm">
             Total Points: {playerInfo.total_point}
           </p>
         </div>
@@ -66,35 +66,43 @@ const Player = () => {
         </label>
       </div>
 
-      {/* Event Breakdown */}
-      <div className="bg-white p-4 rounded-md shadow">
-        <h3 className="text-md font-semibold mb-2">
-          Point Breakdown
-        </h3>
-        {filteredEvents.length > 0 ? (
-          <ul>
+      {/* Table Layout */}
+      <div className="w-full overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="text-left text-gray-700 border-b border-gray-200">
+              <th className="py-2 px-3 font-semibold">
+                Event
+              </th>
+              <th className="py-2 px-3 font-semibold">
+                Points
+              </th>
+              <th className="py-2 px-3 font-semibold">
+                Actual
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {filteredEvents.map((event, index) => (
-              <li
+              <tr
                 key={index}
-                className="flex justify-between items-center border-b py-2"
+                className="border-b border-gray-100"
               >
-                <div>
-                  <p className="text-sm font-medium">
-                    {event.eventname}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {event.actual} | {event.PointMode}
-                  </p>
-                </div>
-                <div className="text-right font-semibold text-sm">
-                  {event.point}
-                </div>
-              </li>
+                <td className="py-2 px-3">
+                  {event.eventname}
+                </td>
+                <td className="py-2 px-3">{event.point}</td>
+                <td className="py-2 px-3">
+                  {event.actual}
+                </td>
+              </tr>
             ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-gray-400">
-            No events with points
+          </tbody>
+        </table>
+
+        {filteredEvents.length === 0 && (
+          <p className="text-sm text-gray-400 mt-2">
+            No events with points to display.
           </p>
         )}
       </div>
