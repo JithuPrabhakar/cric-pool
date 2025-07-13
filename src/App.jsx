@@ -152,7 +152,7 @@ const App = () => {
 
             <Route path="/profile" element={<Profile />} />
             <Route
-              path="/player-detail/:id"
+              path="/player-points/:id/:player_id"
               element={<Player />}
             />
             <Route

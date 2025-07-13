@@ -40,7 +40,7 @@ const Footer = () => {
       </Link>
 
       {/* International Matches */}
-      <Link
+      {/* <Link
         to="/international-matches"
         className={`flex flex-col items-center ${
           isActive("/international-matches")
@@ -50,7 +50,7 @@ const Footer = () => {
       >
         <BiSolidCricketBall />
         <p className="text-xs">International Matches</p>
-      </Link>
+      </Link> */}
 
       {/* Predictions */}
       <Link

@@ -54,8 +54,8 @@ const PredictionsUpcomingDetails = () => {
   return (
     <div>
       <UpcomingHeader
-        prizePool={match.prize_pool}
-        spots={match.spots}
+        prizePool={match.total_prize_tool}
+        spots={match.total_spots}
         isEdit={isEdit}
         matchId={id}
       />
