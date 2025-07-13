@@ -19,7 +19,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async () => {
     if (!username.trim()) {
-      setError("Please enter a valid username.")
+      setError("Please enter a phone number.")
       return
     }
 
@@ -31,7 +31,7 @@ const ForgotPassword = () => {
 
       if (status?.StatusCode === 0) {
         setSuccessMessage(
-          "Reset link sent successfully. Check your inbox."
+          "Password send to your mobile number, check your messages"
         )
         setError("")
       } else {
@@ -68,9 +68,9 @@ const ForgotPassword = () => {
 
         <InputField
           id="username"
-          label="Username"
-          type="text"
-          placeholder="Enter your username"
+          label="Phone number"
+          type="number"
+          placeholder="Enter your phone number"
           value={username}
           onChange={handleInputChange}
         />
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
           }`}
           disabled={isLoading}
         >
-          {isLoading ? "Sending..." : "Send Reset Link"}
+          {isLoading ? "Sending..." : "Recover Password"}
         </Button>
       </FormWrapper>
     </div>

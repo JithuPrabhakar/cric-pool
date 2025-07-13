@@ -86,9 +86,8 @@ const MyTeam = ({ matchId, setIsEdit, isEdit }) => {
                 </div>
               </div>
               <div className="flex gap-4">
-                {player.captain_status === "1" && "Captain"}
-                {player.vice_captain_status === "1" &&
-                  "Vice Captain"}
+                {player.captain_status === "1" && "C"}
+                {player.vice_captain_status === "1" && "VC"}
               </div>
             </li>
           ))}

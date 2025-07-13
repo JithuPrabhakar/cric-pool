@@ -45,7 +45,9 @@ const Leaderboard = ({ matchId }) => {
     <div className="p-4 font-sans">
       {/* App User Section */}
       {appUser && (
-        <Link to={`/user-detail/${appUser.user_id}`}>
+        <Link
+          to={`/user-detail/${appUser.fantasy_team_id}`}
+        >
           <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
             <div className="flex items-center space-x-2">
               <img
@@ -71,10 +73,11 @@ const Leaderboard = ({ matchId }) => {
         {restUsers.map((player, index) => (
           <Link
             key={player.fantasy_team_id || index}
-            to={`/user-detail/${player.user_id}`}
+            to={`/user-detail/${player.fantasy_team_id}`}
           >
             <div className="flex justify-between items-center px-2 py-1 border-b">
               <div className="flex items-center space-x-2">
+                <p>{player.RowNumber}</p>
                 <img
                   src={player.user_logo}
                   alt={player.user_name}
