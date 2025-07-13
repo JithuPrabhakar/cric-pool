@@ -50,6 +50,7 @@ const Leaderboard = ({ matchId }) => {
         >
           <div className="flex justify-between items-center bg-green-100 p-2 rounded-md mb-3">
             <div className="flex items-center space-x-2">
+              <p>{appUser.RowNumber}</p>
               <img
                 src={appUser.user_logo}
                 alt={appUser.user_name}
