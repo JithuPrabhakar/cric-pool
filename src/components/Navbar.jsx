@@ -29,7 +29,9 @@ const Navbar = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-xl font-bold">MY ROYAL TEAM</p>
+        <p className="text-xl font-bold">
+          Mystery Heroes 11
+        </p>
       </div>
       <div className="flex gap-4 items-center">
         <NavLink to="/notification">
