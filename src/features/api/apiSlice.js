@@ -205,6 +205,16 @@ export const apiSlice = createApi({
       query: ({ username }) =>
         `APIProfile/ForgotPassword?username=${username}`,
     }),
+    getSubscriptionDetails: builder.query({
+      query: (id) =>
+        `APIProfile/GetSubscriptionDetails?id=${id}`,
+      transformResponse: (res) => res[1] || [],
+    }),
+    getProfileDetails: builder.query({
+      query: (id) =>
+        `APIProfile/GetProfileDetails?id=${id}`,
+      transformResponse: (res) => res[1] || [],
+    }),
   }),
 })
 
@@ -247,4 +257,6 @@ export const {
   useResendOTPMutation,
   useSignInUserMutation,
   useForgotPasswordMutation,
+  useGetSubscriptionDetailsQuery,
+  useGetProfileDetailsQuery,
 } = apiSlice

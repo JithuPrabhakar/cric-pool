@@ -32,6 +32,7 @@ import Profile from "./components/profile/Profile"
 import { useSelector } from "react-redux"
 import User from "./components/profile/User"
 import Player from "./components/profile/Player"
+// import MatchPage from "./features/hooks/MatchPage"
 
 const App = () => {
   const user = useSelector((state) => state.auth.user)
@@ -159,6 +160,10 @@ const App = () => {
               path="/user-detail/:id"
               element={<User />}
             />
+            {/* <Route
+              path="matchpage"
+              element={<MatchPage />}
+            /> */}
 
             <Route
               path="*"
