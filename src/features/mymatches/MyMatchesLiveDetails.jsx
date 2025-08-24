@@ -1,40 +1,40 @@
 import LiveMatchTabs from "../../components/live/LiveMatchTabs"
 import LiveMatchHeader from "../../components/live/LiveMatchHeader"
 import { useParams } from "react-router-dom"
-import { useGetMatchDetailsQuery } from "../api/apiSlice"
-import { useEffect } from "react"
+import { useRealtimeMatch } from "../../useRealtimeMatch"
+import { useGetPredictionMatchDetailsQuery } from "../api/apiSlice"
 
-const PredictionsLiveDetails = () => {
+const MyMatchesLiveDetails = () => {
   const { id } = useParams()
   const {
-    data: match,
-    isLoading,
-    isError,
-    refetch,
-  } = useGetMatchDetailsQuery(Number(id), {
-    skip: !id,
-  })
+    data: live,
+    loading: liveLoading,
+    error: liveError,
+  } = useRealtimeMatch(id)
+  const {
+    data: apiData,
+    isLoading: apiLoading,
+    isError: apiError,
+  } = useGetPredictionMatchDetailsQuery(Number(id))
 
-  // Auto-refetch every 30 seconds
-  useEffect(() => {
-    if (!id) return
+  if (apiLoading || liveLoading) return <p>Loading...</p>
+  if (apiError)
+    return <p>Error loading match details (API).</p>
+  if (liveError)
+    return (
+      <p>Error loading live data: {liveError.message}</p>
+    )
 
-    const interval = setInterval(() => {
-      refetch()
-    }, 30000) // 30 seconds
-
-    return () => clearInterval(interval) // cleanup on unmount
-  }, [id, refetch])
-
-  if (isLoading) return <p>Loading match details...</p>
-  if (isError) return <p>Error loading match details.</p>
+  // Your original API returned an array; grab the first item
+  const base = apiData?.[0] ?? {}
+  const merged = { ...base, ...live } // live fields override base if overlaps
 
   return (
     <div className="rounded-lg">
-      <LiveMatchHeader match={match[0]} />
-      <LiveMatchTabs match={match[0]} />
+      <LiveMatchHeader match={merged} />
+      <LiveMatchTabs match={merged} />
     </div>
   )
 }
 
-export default PredictionsLiveDetails
+export default MyMatchesLiveDetails
