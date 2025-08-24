@@ -30,7 +30,7 @@ const Navbar = () => {
           />
         </div>
         <p className="text-xl font-bold">
-          Mystery Heroes 11
+          Mystery Heroes 11
         </p>
       </div>
       <div className="flex gap-4 items-center">
