@@ -33,7 +33,7 @@ export function useRealtimeMatch(matchId) {
           // Put side effects here (e.g., animations, sounds, etc.)
         }
 
-        setData(obj)
+        setData(obj ? { ...obj } : null)
         setLoading(false)
       },
       (e) => {
