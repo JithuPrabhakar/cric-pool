@@ -11,6 +11,7 @@ const MyMatchesLiveDetails = () => {
     loading: liveLoading,
     error: liveError,
   } = useRealtimeMatch(id)
+  console.log(live)
   const {
     data: apiData,
     isLoading: apiLoading,
@@ -31,8 +32,8 @@ const MyMatchesLiveDetails = () => {
 
   return (
     <div className="rounded-lg">
-      <LiveMatchHeader match={merged} />
-      <LiveMatchTabs match={merged} />
+      <LiveMatchHeader match={{ ...merged }} />
+      <LiveMatchTabs match={{ ...merged }} />
     </div>
   )
 }
